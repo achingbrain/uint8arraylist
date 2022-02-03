@@ -51,7 +51,7 @@ export class Uint8ArrayList {
       return
     }
 
-    while (this.bufs.length) {
+    while (this.bufs.length > 0) {
       if (bytes >= this.bufs[0].byteLength) {
         bytes -= this.bufs[0].byteLength
         this.length -= this.bufs[0].byteLength
@@ -71,7 +71,7 @@ export class Uint8ArrayList {
       throw new RangeError('index out of bounds')
     }
 
-    let bufs: Uint8Array[] = []
+    const bufs: Uint8Array[] = []
     let offset = 0
 
     for (const buf of this.bufs) {

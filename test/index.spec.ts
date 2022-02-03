@@ -133,4 +133,3 @@ describe('Uint8arrayList', () => {
     expect(bl.toUint8Array().byteLength).to.equal(0)
   })
 })
-
