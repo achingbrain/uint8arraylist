@@ -23,6 +23,11 @@ list.toUint8Array()
 list.consume(3)
 list.toUint8Array()
 // -> Uint8Array([3, 4, 5])
+
+// you can also iterate over the list
+for (const buf of list) {
+  // ..do something with `buf`
+}
 ```
 
 ## Inspiration
