@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/achingbrain/uint8arraylist/compare/v1.0.0...v1.1.0) (2022-02-04)
+
+
+### Features
+
+* append multiple and make list iterable ([#1](https://github.com/achingbrain/uint8arraylist/issues/1)) ([70d7542](https://github.com/achingbrain/uint8arraylist/commit/70d7542f86d3cc94a98e7e4f8c33130bc61502bf))
+
 ## 1.0.0 (2022-02-03)
 
 
