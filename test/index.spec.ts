@@ -2,8 +2,40 @@ import { expect } from 'aegir/utils/chai.js'
 import { Uint8ArrayList } from '../src/index.js'
 import { toString } from 'uint8arrays/to-string'
 import { fromString } from 'uint8arrays/from-string'
+import all from 'it-all'
 
 describe('Uint8arrayList', () => {
+  it('constructor accepts no args', () => {
+    const bl = new Uint8ArrayList()
+
+    expect(bl.length).to.equal(0)
+    expect(toString(bl.toUint8Array(), 'ascii')).to.equal('')
+  })
+
+  it('constructor accepts a Uint8Array', () => {
+    const bl = new Uint8ArrayList(
+      new Uint8Array([97, 98, 99])
+    )
+
+    expect(bl.length).to.equal(3)
+    expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abc')
+  })
+
+  it('constructor accepts multiple Uint8Arrays', () => {
+    const bl = new Uint8ArrayList(
+      new Uint8Array([97, 98, 99]),
+      Uint8Array.from([100, 101, 102]),
+      new Uint8Array([103, 104, 105]),
+      new Uint8Array([106, 107, 108]),
+      new Uint8Array([109, 110, 111, 112]),
+      new Uint8Array([113, 114, 115, 116, 117]),
+      new Uint8Array([118, 119, 120, 121, 122])
+    )
+
+    expect(bl.length).to.equal(26)
+    expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+  })
+
   it('single bytes from single buffer', () => {
     const bl = new Uint8ArrayList()
 
@@ -88,6 +120,23 @@ describe('Uint8arrayList', () => {
     expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
   })
 
+  it('append accepts multiple Uint8Arrays', () => {
+    const bl = new Uint8ArrayList()
+
+    bl.append(
+      new Uint8Array([97, 98, 99]),
+      Uint8Array.from([100, 101, 102]),
+      new Uint8Array([103, 104, 105]),
+      new Uint8Array([106, 107, 108]),
+      new Uint8Array([109, 110, 111, 112]),
+      new Uint8Array([113, 114, 115, 116, 117]),
+      new Uint8Array([118, 119, 120, 121, 122])
+    )
+
+    expect(bl.length).to.equal(26)
+    expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+  })
+
   it('consuming from multiple buffers', () => {
     const bl = new Uint8ArrayList()
 
@@ -131,5 +180,21 @@ describe('Uint8arrayList', () => {
 
     expect(bl.length).to.equal(0)
     expect(bl.toUint8Array().byteLength).to.equal(0)
+  })
+
+  it('should be iterable', async () => {
+    const input = [
+      Uint8Array.from([0, 1, 2]),
+      Uint8Array.from([3, 4, 5])
+    ]
+
+    const bl = new Uint8ArrayList()
+    bl.append(input[0])
+    bl.append(input[1])
+
+    const res = await all(bl)
+
+    expect(res).to.deep.equal(input)
+    expect([...bl]).to.deep.equal(input)
   })
 })

@@ -1,22 +1,29 @@
 import { concat } from 'uint8arrays'
 
-export class Uint8ArrayList {
+export class Uint8ArrayList implements Iterable<Uint8Array> {
   private bufs: Uint8Array[]
   public length: number
 
-  constructor (data?: Uint8Array) {
+  constructor (...data: Uint8Array[]) {
     this.bufs = []
+    this.length = 0
 
-    if (data != null) {
-      this.bufs.push(data)
-    }
-
-    this.length = this.bufs.reduce((acc, curr) => acc + curr.byteLength, 0)
+    this.append(...data)
   }
 
-  append (data: Uint8Array) {
-    this.bufs.push(data)
-    this.length += data.byteLength
+  * [Symbol.iterator] () {
+    yield * this.bufs
+  }
+
+  append (...bufs: Uint8Array[]) {
+    let length = 0
+
+    for (const buf of bufs) {
+      length += buf.byteLength
+      this.bufs.push(buf)
+    }
+
+    this.length += length
   }
 
   get (index: number) {
