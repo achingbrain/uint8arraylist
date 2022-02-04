@@ -8,7 +8,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.bufs = []
     this.length = 0
 
-    this.append(...data)
+    this.appendAll(data)
   }
 
   * [Symbol.iterator] () {
@@ -16,6 +16,17 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   append (...bufs: Uint8Array[]) {
+    let length = 0
+
+    for (const buf of bufs) {
+      length += buf.byteLength
+      this.bufs.push(buf)
+    }
+
+    this.length += length
+  }
+
+  appendAll (bufs: Uint8Array[]) {
     let length = 0
 
     for (const buf of bufs) {
@@ -72,6 +83,18 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   toUint8Array (beginInclusive: number = 0, endExclusive?: number) {
+    const { bufs, length } = this._subList(beginInclusive, endExclusive)
+
+    return concat(bufs, length)
+  }
+
+  subarray (beginInclusive: number = 0, endExclusive?: number) {
+    const { bufs } = this._subList(beginInclusive, endExclusive)
+
+    return new Uint8ArrayList(...bufs)
+  }
+
+  _subList (beginInclusive: number = 0, endExclusive?: number) {
     endExclusive = endExclusive ?? (this.length > 0 ? this.length : 0)
 
     if (beginInclusive < 0 || endExclusive > this.length) {
@@ -119,6 +142,6 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       }
     }
 
-    return concat(bufs, endExclusive - beginInclusive)
+    return { bufs, length: endExclusive - beginInclusive }
   }
 }

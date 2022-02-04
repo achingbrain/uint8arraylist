@@ -28,6 +28,9 @@ list.toUint8Array()
 for (const buf of list) {
   // ..do something with `buf`
 }
+
+list.slice(0, 1)
+// -> Uint8ArrayList([0])
 ```
 
 ## Inspiration
