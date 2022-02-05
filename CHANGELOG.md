@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/achingbrain/uint8arraylist/compare/v1.1.0...v1.2.0) (2022-02-05)
+
+
+### Features
+
+* add appendAll and subarray methods and byteLength property ([#2](https://github.com/achingbrain/uint8arraylist/issues/2)) ([1db968b](https://github.com/achingbrain/uint8arraylist/commit/1db968b0b4d405724919b14929dc777a44e3b11d))
+
 ## [1.1.0](https://github.com/achingbrain/uint8arraylist/compare/v1.0.0...v1.1.0) (2022-02-04)
 
 
