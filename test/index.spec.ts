@@ -10,7 +10,7 @@ describe('Uint8arrayList', () => {
       const bl = new Uint8ArrayList()
 
       expect(bl.length).to.equal(0)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('')
+      expect(toString(bl.slice(), 'ascii')).to.equal('')
     })
 
     it('constructor accepts a Uint8Array', () => {
@@ -19,7 +19,7 @@ describe('Uint8arrayList', () => {
       )
 
       expect(bl.length).to.equal(3)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abc')
+      expect(toString(bl.slice(), 'ascii')).to.equal('abc')
     })
 
     it('constructor accepts multiple Uint8Arrays', () => {
@@ -34,7 +34,26 @@ describe('Uint8arrayList', () => {
       )
 
       expect(bl.length).to.equal(26)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+  })
+
+  describe('byteLength', () => {
+    it('byteLength is the same as length', () => {
+      const bl = new Uint8ArrayList()
+
+      expect(bl.length).to.equal(0)
+      expect(bl.byteLength).to.equal(0)
+
+      bl.append(Uint8Array.from([0, 1, 2]))
+
+      expect(bl.length).to.equal(3)
+      expect(bl.byteLength).to.equal(3)
+
+      bl.consume(1)
+
+      expect(bl.length).to.equal(2)
+      expect(bl.byteLength).to.equal(2)
     })
   })
 
@@ -101,7 +120,7 @@ describe('Uint8arrayList', () => {
     })
   })
 
-  describe('toUint8Array', () => {
+  describe('slice', () => {
     it('multi bytes from single buffer', () => {
       const bl = new Uint8ArrayList()
 
@@ -109,10 +128,10 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(4)
 
-      expect(toString(bl.toUint8Array(0, 4), 'ascii')).to.equal('abcd')
-      expect(toString(bl.toUint8Array(0, 3), 'ascii')).to.equal('abc')
-      expect(toString(bl.toUint8Array(1, 4), 'ascii')).to.equal('bcd')
-      expect(() => toString(bl.toUint8Array(-4, -1), 'ascii')).to.throw(RangeError)
+      expect(toString(bl.slice(0, 4), 'ascii')).to.equal('abcd')
+      expect(toString(bl.slice(0, 3), 'ascii')).to.equal('abc')
+      expect(toString(bl.slice(1, 4), 'ascii')).to.equal('bcd')
+      expect(() => toString(bl.slice(-4, -1), 'ascii')).to.throw(RangeError)
     })
 
     it('multiple bytes from multiple buffers', () => {
@@ -125,12 +144,14 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(10)
 
-      expect(toString(bl.toUint8Array(0, 10), 'ascii')).to.equal('abcdefghij')
-      expect(toString(bl.toUint8Array(3, 10), 'ascii')).to.equal('defghij')
-      expect(toString(bl.toUint8Array(3, 6), 'ascii')).to.equal('def')
-      expect(toString(bl.toUint8Array(3, 8), 'ascii')).to.equal('defgh')
-      expect(toString(bl.toUint8Array(5, 10), 'ascii')).to.equal('fghij')
-      expect(() => toString(bl.toUint8Array(-7, -4), 'ascii')).to.throw(RangeError)
+      expect(toString(bl.slice(0, 0), 'ascii')).to.equal('')
+      expect(toString(bl.slice(0, 1), 'ascii')).to.equal('a')
+      expect(toString(bl.slice(0, 10), 'ascii')).to.equal('abcdefghij')
+      expect(toString(bl.slice(3, 10), 'ascii')).to.equal('defghij')
+      expect(toString(bl.slice(3, 6), 'ascii')).to.equal('def')
+      expect(toString(bl.slice(3, 8), 'ascii')).to.equal('defgh')
+      expect(toString(bl.slice(5, 10), 'ascii')).to.equal('fghij')
+      expect(() => toString(bl.slice(-7, -4), 'ascii')).to.throw(RangeError)
     })
   })
 
@@ -142,10 +163,10 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(4)
 
-      expect(toString(bl.subarray(0, 4).toUint8Array(), 'ascii')).to.equal('abcd')
-      expect(toString(bl.subarray(0, 3).toUint8Array(), 'ascii')).to.equal('abc')
-      expect(toString(bl.subarray(1, 4).toUint8Array(), 'ascii')).to.equal('bcd')
-      expect(() => toString(bl.subarray(-4, -1).toUint8Array(), 'ascii')).to.throw(RangeError)
+      expect(toString(bl.subarray(0, 4).slice(), 'ascii')).to.equal('abcd')
+      expect(toString(bl.subarray(0, 3).slice(), 'ascii')).to.equal('abc')
+      expect(toString(bl.subarray(1, 4).slice(), 'ascii')).to.equal('bcd')
+      expect(() => toString(bl.subarray(-4, -1).slice(), 'ascii')).to.throw(RangeError)
     })
 
     it('multiple bytes from multiple buffers', () => {
@@ -158,12 +179,14 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(10)
 
-      expect(toString(bl.subarray(0, 10).toUint8Array(), 'ascii')).to.equal('abcdefghij')
-      expect(toString(bl.subarray(3, 10).toUint8Array(), 'ascii')).to.equal('defghij')
-      expect(toString(bl.subarray(3, 6).toUint8Array(), 'ascii')).to.equal('def')
-      expect(toString(bl.subarray(3, 8).toUint8Array(), 'ascii')).to.equal('defgh')
-      expect(toString(bl.subarray(5, 10).toUint8Array(), 'ascii')).to.equal('fghij')
-      expect(() => toString(bl.subarray(-7, -4).toUint8Array(), 'ascii')).to.throw(RangeError)
+      expect(toString(bl.subarray(0, 0).slice(), 'ascii')).to.equal('')
+      expect(toString(bl.subarray(0, 1).slice(), 'ascii')).to.equal('a')
+      expect(toString(bl.subarray(0, 10).slice(), 'ascii')).to.equal('abcdefghij')
+      expect(toString(bl.subarray(3, 10).slice(), 'ascii')).to.equal('defghij')
+      expect(toString(bl.subarray(3, 6).slice(), 'ascii')).to.equal('def')
+      expect(toString(bl.subarray(3, 8).slice(), 'ascii')).to.equal('defgh')
+      expect(toString(bl.subarray(5, 10).slice(), 'ascii')).to.equal('fghij')
+      expect(() => toString(bl.subarray(-7, -4).slice(), 'ascii')).to.throw(RangeError)
     })
   })
 
@@ -180,7 +203,7 @@ describe('Uint8arrayList', () => {
       bl.append(new Uint8Array([118, 119, 120, 121, 122]))
 
       expect(bl.length).to.equal(26)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
     })
 
     it('append accepts multiple Uint8Arrays', () => {
@@ -197,7 +220,7 @@ describe('Uint8arrayList', () => {
       )
 
       expect(bl.length).to.equal(26)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
     })
   })
 
@@ -216,7 +239,7 @@ describe('Uint8arrayList', () => {
       ])
 
       expect(bl.length).to.equal(26)
-      expect(toString(bl.toUint8Array(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
     })
   })
 
@@ -231,27 +254,27 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(10)
 
-      expect(toString(bl.toUint8Array(0, 10), 'ascii')).to.equal('abcdefghij')
+      expect(toString(bl.slice(0, 10), 'ascii')).to.equal('abcdefghij')
 
       bl.consume(3)
       expect(bl.length).to.equal(7)
-      expect(toString(bl.toUint8Array(0, 7), 'ascii')).to.equal('defghij')
+      expect(toString(bl.slice(0, 7), 'ascii')).to.equal('defghij')
 
       bl.consume(2)
       expect(bl.length).to.equal(5)
-      expect(toString(bl.toUint8Array(0, 5), 'ascii')).to.equal('fghij')
+      expect(toString(bl.slice(0, 5), 'ascii')).to.equal('fghij')
 
       bl.consume(1)
       expect(bl.length).to.equal(4)
-      expect(toString(bl.toUint8Array(0, 4), 'ascii')).to.equal('ghij')
+      expect(toString(bl.slice(0, 4), 'ascii')).to.equal('ghij')
 
       bl.consume(1)
       expect(bl.length).to.equal(3)
-      expect(toString(bl.toUint8Array(0, 3), 'ascii')).to.equal('hij')
+      expect(toString(bl.slice(0, 3), 'ascii')).to.equal('hij')
 
       bl.consume(2)
       expect(bl.length).to.equal(1)
-      expect(toString(bl.toUint8Array(0, 1), 'ascii')).to.equal('j')
+      expect(toString(bl.slice(0, 1), 'ascii')).to.equal('j')
     })
 
     it('complete consumption', () => {
@@ -263,7 +286,7 @@ describe('Uint8arrayList', () => {
       bl.consume(2)
 
       expect(bl.length).to.equal(0)
-      expect(bl.toUint8Array().byteLength).to.equal(0)
+      expect(bl.slice().byteLength).to.equal(0)
     })
   })
 

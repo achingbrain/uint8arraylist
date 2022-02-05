@@ -1,10 +1,12 @@
 import { concat } from 'uint8arrays'
 
+type Appendable = Uint8ArrayList | Uint8Array
+
 export class Uint8ArrayList implements Iterable<Uint8Array> {
   private bufs: Uint8Array[]
   public length: number
 
-  constructor (...data: Uint8Array[]) {
+  constructor (...data: Appendable[]) {
     this.bufs = []
     this.length = 0
 
@@ -15,23 +17,25 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     yield * this.bufs
   }
 
-  append (...bufs: Uint8Array[]) {
-    let length = 0
-
-    for (const buf of bufs) {
-      length += buf.byteLength
-      this.bufs.push(buf)
-    }
-
-    this.length += length
+  get byteLength () {
+    return this.length
   }
 
-  appendAll (bufs: Uint8Array[]) {
+  append (...bufs: Appendable[]) {
+    this.appendAll(bufs)
+  }
+
+  appendAll (bufs: Appendable[]) {
     let length = 0
 
     for (const buf of bufs) {
-      length += buf.byteLength
-      this.bufs.push(buf)
+      if (buf instanceof Uint8Array) {
+        length += buf.byteLength
+        this.bufs.push(buf)
+      } else {
+        length += buf.length
+        this.bufs = this.bufs.concat(buf.bufs)
+      }
     }
 
     this.length += length
@@ -82,23 +86,35 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
   }
 
-  toUint8Array (beginInclusive: number = 0, endExclusive?: number) {
+  slice (beginInclusive?: number, endExclusive?: number) {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
     return concat(bufs, length)
   }
 
-  subarray (beginInclusive: number = 0, endExclusive?: number) {
+  subarray (beginInclusive?: number, endExclusive?: number) {
     const { bufs } = this._subList(beginInclusive, endExclusive)
 
-    return new Uint8ArrayList(...bufs)
+    const list = new Uint8ArrayList()
+    list.appendAll(bufs)
+
+    return list
   }
 
-  _subList (beginInclusive: number = 0, endExclusive?: number) {
+  _subList (beginInclusive?: number, endExclusive?: number) {
+    if (beginInclusive == null && endExclusive == null) {
+      return { bufs: this.bufs, length: this.length }
+    }
+
+    beginInclusive = beginInclusive ?? 0
     endExclusive = endExclusive ?? (this.length > 0 ? this.length : 0)
 
     if (beginInclusive < 0 || endExclusive > this.length) {
       throw new RangeError('index out of bounds')
+    }
+
+    if (beginInclusive === endExclusive) {
+      return { bufs: [], length: 0 }
     }
 
     const bufs: Uint8Array[] = []
