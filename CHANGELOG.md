@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/achingbrain/uint8arraylist/compare/v1.2.0...v1.3.0) (2022-03-08)
+
+
+### Features
+
+* add .set and .write methods ([#3](https://github.com/achingbrain/uint8arraylist/issues/3)) ([07f85a5](https://github.com/achingbrain/uint8arraylist/commit/07f85a505dbc253efeccaf75cdfe2e94d4a378c8))
+
 ## [1.2.0](https://github.com/achingbrain/uint8arraylist/compare/v1.1.0...v1.2.0) (2022-02-05)
 
 
