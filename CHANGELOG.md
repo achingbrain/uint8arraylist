@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/achingbrain/uint8arraylist/compare/v1.3.0...v1.4.0) (2022-03-08)
+
+
+### Features
+
+* add DataView methods ([#5](https://github.com/achingbrain/uint8arraylist/issues/5)) ([f6ad9df](https://github.com/achingbrain/uint8arraylist/commit/f6ad9dfc3be608566e45f8f3a3f8247b6f295ee9))
+
 ## [1.3.0](https://github.com/achingbrain/uint8arraylist/compare/v1.2.0...v1.3.0) (2022-03-08)
 
 
