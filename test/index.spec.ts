@@ -392,4 +392,474 @@ describe('Uint8arrayList', () => {
       expect([...bl]).to.deep.equal(input)
     })
   })
+
+  describe('DataView methods', () => {
+    it('should get Int 8', () => {
+      const value = 100
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setInt8(0, value)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getInt8(0)).to.equal(view.getInt8(0))
+      expect(list.getInt8(0)).to.equal(value)
+    })
+
+    it('should get big endian Int 16', () => {
+      const value = 20292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setInt16(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getInt16(0, false)).to.equal(view.getInt16(0, false))
+      expect(list.getInt16(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Int 16', () => {
+      const value = 20292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setInt16(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getInt16(0, true)).to.equal(view.getInt16(0, true))
+      expect(list.getInt16(0, true)).to.equal(value)
+    })
+
+    it('should get big endian Int 32', () => {
+      const value = 80292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setInt32(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getInt32(0, false)).to.equal(view.getInt32(0, false))
+      expect(list.getInt32(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Int 32', () => {
+      const value = 80292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setInt32(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getInt32(0, true)).to.equal(view.getInt32(0, true))
+      expect(list.getInt32(0, true)).to.equal(value)
+    })
+
+    it('should get big endian BigInt 64', () => {
+      const value = 5313523425837842432n
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setBigInt64(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getBigInt64(0, false)).to.equal(view.getBigInt64(0, false))
+      expect(list.getBigInt64(0, false)).to.equal(value)
+    })
+
+    it('should get little endian BigInt 64', () => {
+      const value = 5313523425837842432n
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setBigInt64(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getBigInt64(0, true)).to.equal(view.getBigInt64(0, true))
+      expect(list.getBigInt64(0, true)).to.equal(value)
+    })
+
+    it('should get Uint 8', () => {
+      const value = 128
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setUint8(0, value)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getUint8(0)).to.equal(view.getUint8(0))
+      expect(list.getUint8(0)).to.equal(value)
+    })
+
+    it('should get big endian Uint 16', () => {
+      const value = 20292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setUint16(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getUint16(0, false)).to.equal(view.getUint16(0, false))
+      expect(list.getUint16(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Uint 16', () => {
+      const value = 20292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setUint16(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getUint16(0, true)).to.equal(view.getUint16(0, true))
+      expect(list.getUint16(0, true)).to.equal(value)
+    })
+
+    it('should get big endian Uint 32', () => {
+      const value = 80292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setUint32(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getUint32(0, false)).to.equal(view.getUint32(0, false))
+      expect(list.getUint32(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Uint 32', () => {
+      const value = 80292
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setUint32(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getUint32(0, true)).to.equal(view.getUint32(0, true))
+      expect(list.getUint32(0, true)).to.equal(value)
+    })
+
+    it('should get big endian BigUint 64', () => {
+      const value = 5313523425837842432n
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setBigUint64(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getBigUint64(0, false)).to.equal(view.getBigUint64(0, false))
+      expect(list.getBigUint64(0, false)).to.equal(value)
+    })
+
+    it('should get little endian BigUint 64', () => {
+      const value = 5313523425837842432n
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setBigUint64(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getBigUint64(0, true)).to.equal(view.getBigUint64(0, true))
+      expect(list.getBigUint64(0, true)).to.equal(value)
+    })
+
+    it('should get big endian Float 32', () => {
+      const value = 44942.34
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setFloat32(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getFloat32(0, false)).to.equal(view.getFloat32(0, false))
+      // expect(list.getFloat32(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Float 32', () => {
+      const value = 44942.34
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setFloat32(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getFloat32(0, true)).to.equal(view.getFloat32(0, true))
+      // expect(list.getFloat32(0, true)).to.equal(value)
+    })
+
+    it('should get big endian Float 64', () => {
+      const value = 444942.3
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setFloat64(0, value, false)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getFloat64(0, false)).to.equal(view.getFloat64(0, false))
+      expect(list.getFloat64(0, false)).to.equal(value)
+    })
+
+    it('should get little endian Float 64', () => {
+      const value = 444942.3
+
+      const buf = new Uint8Array(8)
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+      view.setFloat64(0, value, true)
+
+      const list = new Uint8ArrayList(buf)
+
+      expect(list.getFloat64(0, true)).to.equal(view.getFloat64(0, true))
+      expect(list.getFloat64(0, true)).to.equal(value)
+    })
+
+    it('should set Int 8', () => {
+      const value = 100
+
+      const buf = new Uint8Array(1)
+      const list = new Uint8ArrayList(buf)
+      list.setInt8(0, value)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getInt8(0)).to.equal(view.getInt8(0))
+      expect(list.getInt8(0)).to.equal(value)
+    })
+
+    it('should set big endian Int 16', () => {
+      const value = 12932
+
+      const buf = new Uint8Array(2)
+      const list = new Uint8ArrayList(buf)
+      list.setInt16(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getInt16(0, false)).to.equal(view.getInt16(0, false))
+      expect(list.getInt16(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Int 16', () => {
+      const value = 12932
+
+      const buf = new Uint8Array(2)
+      const list = new Uint8ArrayList(buf)
+      list.setInt16(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getInt16(0, true)).to.equal(view.getInt16(0, true))
+      expect(list.getInt16(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Int 32', () => {
+      const value = 22932
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setInt32(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getInt32(0, false)).to.equal(view.getInt32(0, false))
+      expect(list.getInt32(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Int 32', () => {
+      const value = 22932
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setInt32(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getInt32(0, true)).to.equal(view.getInt32(0, true))
+      expect(list.getInt32(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Int 64', () => {
+      const value = 23982932n
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setBigInt64(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getBigInt64(0, false)).to.equal(view.getBigInt64(0, false))
+      expect(list.getBigInt64(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Int 64', () => {
+      const value = 23982932n
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setBigInt64(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getBigInt64(0, true)).to.equal(view.getBigInt64(0, true))
+      expect(list.getBigInt64(0, true)).to.equal(value)
+    })
+
+    it('should set Uint 8', () => {
+      const value = 100
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setUint8(0, value)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getUint8(0)).to.equal(view.getUint8(0))
+      expect(list.getUint8(0)).to.equal(value)
+    })
+
+    it('should set big endian Uint 16', () => {
+      const value = 12932
+
+      const buf = new Uint8Array(2)
+      const list = new Uint8ArrayList(buf)
+      list.setUint16(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getUint16(0, false)).to.equal(view.getUint16(0, false))
+      expect(list.getUint16(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Uint 16', () => {
+      const value = 12932
+
+      const buf = new Uint8Array(2)
+      const list = new Uint8ArrayList(buf)
+      list.setUint16(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getUint16(0, true)).to.equal(view.getUint16(0, true))
+      expect(list.getUint16(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Uint 32', () => {
+      const value = 22932
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setUint32(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getUint32(0, false)).to.equal(view.getUint32(0, false))
+      expect(list.getUint32(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Uint 32', () => {
+      const value = 22932
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setUint32(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getUint32(0, true)).to.equal(view.getUint32(0, true))
+      expect(list.getUint32(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Uint 64', () => {
+      const value = 23982932n
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setBigUint64(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getBigUint64(0, false)).to.equal(view.getBigUint64(0, false))
+      expect(list.getBigUint64(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Uint 64', () => {
+      const value = 23982932n
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setBigUint64(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getBigUint64(0, true)).to.equal(view.getBigUint64(0, true))
+      expect(list.getBigUint64(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Float 32', () => {
+      const value = 22932.3929
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setFloat32(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getFloat32(0, false)).to.equal(view.getFloat32(0, false))
+      // expect(list.getFloat32(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Float 32', () => {
+      const value = 22932.3929
+
+      const buf = new Uint8Array(4)
+      const list = new Uint8ArrayList(buf)
+      list.setFloat32(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getFloat32(0, true)).to.equal(view.getFloat32(0, true))
+      // expect(list.getFloat32(0, true)).to.equal(value)
+    })
+
+    it('should set big endian Float 64', () => {
+      const value = 22932.3929
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setFloat64(0, value, false)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getFloat64(0, false)).to.equal(view.getFloat64(0, false))
+      expect(list.getFloat64(0, false)).to.equal(value)
+    })
+
+    it('should set little endian Float 64', () => {
+      const value = 22932.3929
+
+      const buf = new Uint8Array(8)
+      const list = new Uint8ArrayList(buf)
+      list.setFloat64(0, value, true)
+
+      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+      expect(list.getFloat64(0, true)).to.equal(view.getFloat64(0, true))
+      expect(list.getFloat64(0, true)).to.equal(value)
+    })
+  })
 })
