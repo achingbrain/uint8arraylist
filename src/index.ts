@@ -202,4 +202,154 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
 
     return { bufs, length: endExclusive - beginInclusive }
   }
+
+  getInt8 (byteOffset: number): number {
+    const buf = this.slice(byteOffset, byteOffset + 1)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getInt8(0)
+  }
+
+  setInt8 (byteOffset: number, value: number): void {
+    const buf = new Uint8Array(1)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setInt8(0, value)
+
+    this.write(buf, byteOffset)
+  }
+
+  getInt16 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 2)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getInt16(0, littleEndian)
+  }
+
+  setInt16 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(2)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setInt16(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getInt32 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getInt32(0, littleEndian)
+  }
+
+  setInt32 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setInt32(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getBigInt64 (byteOffset: number, littleEndian?: boolean): BigInt {
+    const buf = this.slice(byteOffset, byteOffset + 8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getBigInt64(0, littleEndian)
+  }
+
+  setBigInt64 (byteOffset: number, value: bigint, littleEndian?: boolean): void {
+    const buf = new Uint8Array(8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setBigInt64(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getUint8 (byteOffset: number): number {
+    const buf = this.slice(byteOffset, byteOffset + 1)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getUint8(0)
+  }
+
+  setUint8 (byteOffset: number, value: number): void {
+    const buf = new Uint8Array(1)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setUint8(0, value)
+
+    this.write(buf, byteOffset)
+  }
+
+  getUint16 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 2)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getUint16(0, littleEndian)
+  }
+
+  setUint16 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(2)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setUint16(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getUint32 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getUint32(0, littleEndian)
+  }
+
+  setUint32 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setUint32(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getBigUint64 (byteOffset: number, littleEndian?: boolean): BigInt {
+    const buf = this.slice(byteOffset, byteOffset + 8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getBigUint64(0, littleEndian)
+  }
+
+  setBigUint64 (byteOffset: number, value: bigint, littleEndian?: boolean): void {
+    const buf = new Uint8Array(8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setBigUint64(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getFloat32 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getFloat32(0, littleEndian)
+  }
+
+  setFloat32 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(4)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setFloat32(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
+
+  getFloat64 (byteOffset: number, littleEndian?: boolean): number {
+    const buf = this.slice(byteOffset, byteOffset + 8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+
+    return view.getFloat64(0, littleEndian)
+  }
+
+  setFloat64 (byteOffset: number, value: number, littleEndian?: boolean): void {
+    const buf = new Uint8Array(8)
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
+    view.setFloat64(0, value, littleEndian)
+
+    this.write(buf, byteOffset)
+  }
 }
