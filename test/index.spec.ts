@@ -120,6 +120,91 @@ describe('Uint8arrayList', () => {
     })
   })
 
+  describe('set', () => {
+    it('single bytes in a single buffer', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+
+      expect(bl.length).to.equal(4)
+
+      expect(bl.get(0)).to.equal(97)
+      bl.set(0, 123)
+      expect(bl.get(0)).to.equal(123)
+
+      expect(bl.get(3)).to.equal(100)
+      bl.set(3, 111)
+      expect(bl.get(3)).to.equal(111)
+
+      expect(() => bl.set(-1, 5)).to.throw(RangeError)
+      expect(() => bl.set(4, 5)).to.throw(RangeError)
+      expect(() => bl.set(5, 5)).to.throw(RangeError)
+    })
+
+    it('sets bytes in multiple buffers', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(
+        new Uint8Array([97, 98, 99]),
+        Uint8Array.from([100, 101, 102]),
+        new Uint8Array([103, 104, 105]),
+        new Uint8Array([106, 107, 108]),
+        new Uint8Array([109, 110, 111, 112]),
+        new Uint8Array([113, 114, 115, 116, 117]),
+        new Uint8Array([118, 119, 120, 121, 122])
+      )
+
+      expect(bl.length).to.equal(26)
+
+      const letters = 'abcdefghijklmnopqrstuvwxyz'
+
+      for (let i = 0; i < letters.length; i++) {
+        const val = bl.get(i)
+        expect(val).to.equal(fromString(letters[i])[0])
+
+        bl.set(i, 5)
+        expect(bl.get(i)).to.equal(5)
+      }
+    })
+  })
+
+  describe('write', () => {
+    it('does not allow out of range writes', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+
+      expect(() => bl.write(fromString('b'), -1)).to.throw(RangeError)
+      expect(() => bl.write(fromString('b'), 4)).to.throw(RangeError)
+      expect(() => bl.write(fromString('b'), 5)).to.throw(RangeError)
+    })
+
+    it('writes into a single buffer', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+
+      expect(bl.length).to.equal(4)
+
+      bl.write(fromString('b'))
+
+      expect(toString(bl.slice())).to.equal('bbcd')
+    })
+
+    it('writes into a multiple buffers', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+      bl.append(fromString('efgh'))
+
+      expect(bl.length).to.equal(8)
+
+      bl.write(fromString('1234'), 2)
+
+      expect(toString(bl.slice())).to.equal('ab1234gh')
+    })
+  })
+
   describe('slice', () => {
     it('multi bytes from single buffer', () => {
       const bl = new Uint8ArrayList()

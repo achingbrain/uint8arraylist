@@ -2,6 +2,29 @@ import { concat } from 'uint8arrays'
 
 type Appendable = Uint8ArrayList | Uint8Array
 
+function findBufAndOffset (bufs: Uint8Array[], index: number, totalLength: number) {
+  if (index == null || index < 0 || index >= totalLength) {
+    throw new RangeError('index is out of bounds')
+  }
+
+  let offset = 0
+
+  for (const buf of bufs) {
+    const bufEnd = offset + buf.byteLength
+
+    if (index < bufEnd) {
+      return {
+        buf,
+        index: index - offset
+      }
+    }
+
+    offset = bufEnd
+  }
+
+  throw new RangeError('index is out of bounds')
+}
+
 export class Uint8ArrayList implements Iterable<Uint8Array> {
   private bufs: Uint8Array[]
   public length: number
@@ -21,10 +44,16 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return this.length
   }
 
+  /**
+   * Add one or more `bufs` to this Uint8ArrayList
+   */
   append (...bufs: Appendable[]) {
     this.appendAll(bufs)
   }
 
+  /**
+   * Add all `bufs` to this Uint8ArrayList
+   */
   appendAll (bufs: Appendable[]) {
     let length = 0
 
@@ -41,24 +70,37 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.length += length
   }
 
+  /**
+   * Read the value at `index`
+   */
   get (index: number) {
-    if (index == null || index < 0 || index >= this.length) {
-      throw new RangeError('index is out of bounds')
-    }
+    const res = findBufAndOffset(this.bufs, index, this.length)
 
-    let offset = 0
+    return res.buf[res.index]
+  }
 
-    for (const buf of this.bufs) {
-      const bufEnd = offset + buf.byteLength
+  /**
+   * Set the value at `index` to `value`
+   */
+  set (index: number, value: number) {
+    const res = findBufAndOffset(this.bufs, index, this.length)
 
-      if (index < bufEnd) {
-        return buf[index - offset]
+    res.buf[res.index] = value
+  }
+
+  /**
+   * Copy bytes from `buf` to the index specified by `offset`
+   */
+  write (buf: Appendable, offset: number = 0) {
+    if (buf instanceof Uint8Array) {
+      for (let i = 0; i < buf.length; i++) {
+        this.set(offset + i, buf[i])
       }
-
-      offset = bufEnd
+    } else {
+      for (let i = 0; i < buf.length; i++) {
+        this.set(offset + i, buf.get(i))
+      }
     }
-
-    throw new RangeError('index is out of bounds')
   }
 
   /**
