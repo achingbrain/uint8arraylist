@@ -1,5 +1,5 @@
 import { expect } from 'aegir/utils/chai.js'
-import { Uint8ArrayList } from '../src/index.js'
+import { Uint8ArrayList, isUint8ArrayList } from '../src/index.js'
 import { toString } from 'uint8arrays/to-string'
 import { fromString } from 'uint8arrays/from-string'
 import all from 'it-all'
@@ -203,6 +203,19 @@ describe('Uint8arrayList', () => {
 
       expect(toString(bl.slice())).to.equal('ab1234gh')
     })
+
+    it('only writes appendable values', () => {
+      const bl = new Uint8ArrayList()
+
+      // @ts-expect-error invalid params
+      expect(() => bl.write('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.write(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.write(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.write([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+    })
   })
 
   describe('slice', () => {
@@ -306,6 +319,19 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(26)
       expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+
+    it('only appends appendable values', () => {
+      const bl = new Uint8ArrayList()
+
+      // @ts-expect-error invalid params
+      expect(() => bl.append('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.append(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.append(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.append([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
     })
   })
 
@@ -860,6 +886,17 @@ describe('Uint8arrayList', () => {
 
       expect(list.getFloat64(0, true)).to.equal(view.getFloat64(0, true))
       expect(list.getFloat64(0, true)).to.equal(value)
+    })
+  })
+
+  describe('isUint8ArrayList', () => {
+    it('should detect Uint8ArrayList', () => {
+      expect(isUint8ArrayList(new Uint8ArrayList())).to.be.true()
+      expect(isUint8ArrayList([])).to.be.false()
+      expect(isUint8ArrayList(null)).to.be.false()
+      expect(isUint8ArrayList(undefined)).to.be.false()
+      expect(isUint8ArrayList('hello')).to.be.false()
+      expect(isUint8ArrayList(true)).to.be.false()
     })
   })
 })
