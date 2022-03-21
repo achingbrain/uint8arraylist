@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/achingbrain/uint8arraylist/compare/v1.4.0...v1.5.0) (2022-03-21)
+
+
+### Features
+
+* detect uint8arraylists when appending or writing ([#6](https://github.com/achingbrain/uint8arraylist/issues/6)) ([db9a8ef](https://github.com/achingbrain/uint8arraylist/commit/db9a8ef031e9680c694652741d58b89feab7a5f9))
+
 ## [1.4.0](https://github.com/achingbrain/uint8arraylist/compare/v1.3.0...v1.4.0) (2022-03-08)
 
 
