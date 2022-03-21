@@ -1,5 +1,7 @@
 import { concat } from 'uint8arrays'
 
+const symbol = Symbol.for('@achingbrain/uint8arraylist')
+
 type Appendable = Uint8ArrayList | Uint8Array
 
 function findBufAndOffset (bufs: Uint8Array[], index: number, totalLength: number) {
@@ -25,11 +27,21 @@ function findBufAndOffset (bufs: Uint8Array[], index: number, totalLength: numbe
   throw new RangeError('index is out of bounds')
 }
 
+/**
+ * Check if object is a CID instance
+ */
+export function isUint8ArrayList (value: any): value is Uint8ArrayList {
+  return Boolean(value?.[symbol])
+}
+
 export class Uint8ArrayList implements Iterable<Uint8Array> {
   private bufs: Uint8Array[]
   public length: number
 
   constructor (...data: Appendable[]) {
+    // Define symbol
+    Object.defineProperty(this, symbol, { value: true })
+
     this.bufs = []
     this.length = 0
 
@@ -61,9 +73,11 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       if (buf instanceof Uint8Array) {
         length += buf.byteLength
         this.bufs.push(buf)
-      } else {
+      } else if (isUint8ArrayList(buf)) {
         length += buf.length
         this.bufs = this.bufs.concat(buf.bufs)
+      } else {
+        throw new Error('Could not append value, must be an Uint8Array or a Uint8ArrayList')
       }
     }
 
@@ -96,10 +110,12 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       for (let i = 0; i < buf.length; i++) {
         this.set(offset + i, buf[i])
       }
-    } else {
+    } else if (isUint8ArrayList(buf)) {
       for (let i = 0; i < buf.length; i++) {
         this.set(offset + i, buf.get(i))
       }
+    } else {
+      throw new Error('Could not write value, must be an Uint8Array or a Uint8ArrayList')
     }
   }
 
