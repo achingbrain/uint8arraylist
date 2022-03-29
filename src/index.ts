@@ -264,7 +264,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.write(buf, byteOffset)
   }
 
-  getBigInt64 (byteOffset: number, littleEndian?: boolean): BigInt {
+  getBigInt64 (byteOffset: number, littleEndian?: boolean): bigint {
     const buf = this.slice(byteOffset, byteOffset + 8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
@@ -324,7 +324,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.write(buf, byteOffset)
   }
 
-  getBigUint64 (byteOffset: number, littleEndian?: boolean): BigInt {
+  getBigUint64 (byteOffset: number, littleEndian?: boolean): bigint {
     const buf = this.slice(byteOffset, byteOffset + 8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
