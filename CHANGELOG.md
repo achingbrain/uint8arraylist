@@ -1,3 +1,10 @@
+### [1.5.1](https://github.com/achingbrain/uint8arraylist/compare/v1.5.0...v1.5.1) (2022-03-29)
+
+
+### Bug Fixes
+
+* update return type - use bigint instead of BigInt ([#7](https://github.com/achingbrain/uint8arraylist/issues/7)) ([0281a17](https://github.com/achingbrain/uint8arraylist/commit/0281a17776a2fa7f7142c164a04c48c30b2edb30))
+
 ## [1.5.0](https://github.com/achingbrain/uint8arraylist/compare/v1.4.0...v1.5.0) (2022-03-21)
 
 
