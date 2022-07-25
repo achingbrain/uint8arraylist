@@ -25,7 +25,7 @@ for (let i = 0; i < REPEAT; i++) {
     buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
   }
 
-  buf.toUint8Array()
+  buf.slice()
 }
 
 console.info('Uint8ArrayList', Date.now() - start, 'ms') // eslint-disable-line no-console

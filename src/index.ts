@@ -147,6 +147,22 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   slice (beginInclusive?: number, endExclusive?: number) {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
+    if (bufs.length === 1) {
+      if (bufs[0].length === length) {
+        return bufs[0]
+      }
+      if (typeof Buffer !== 'undefined') {
+        return Buffer.from(bufs[0].buffer).slice(0, length)
+      }
+    }
+
+    if (typeof Buffer !== 'undefined') {
+      // For Node.js environment, use Buffer to improve performance
+      // See https://github.com/achingbrain/uint8arraylist/issues/24
+      return Buffer.concat(bufs.map((buf) => Buffer.from(buf.buffer)), length)
+    }
+
+    // For Browser
     return concat(bufs, length)
   }
 
