@@ -9,12 +9,13 @@ for (let i = 0; i < REPEAT; i++) {
 
   for (let j = 0; j < REPEAT; j++) {
     buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
+    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
+    buf.slice()
+    buf.consume(buf.length)
   }
-
-  buf.slice()
 }
 
-console.info('BufferList', Date.now() - start, 'ms') // eslint-disable-line no-console
+console.info('slice BufferList', Date.now() - start, 'ms') // eslint-disable-line no-console
 
 start = Date.now()
 
@@ -23,9 +24,10 @@ for (let i = 0; i < REPEAT; i++) {
 
   for (let j = 0; j < REPEAT; j++) {
     buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
+    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
+    buf.slice()
+    buf.consume(buf.length)
   }
-
-  buf.slice()
 }
 
-console.info('Uint8ArrayList', Date.now() - start, 'ms') // eslint-disable-line no-console
+console.info('slice Uint8ArrayList', Date.now() - start, 'ms') // eslint-disable-line no-console
