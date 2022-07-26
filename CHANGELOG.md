@@ -1,3 +1,10 @@
+### [1.5.2](https://github.com/achingbrain/uint8arraylist/compare/v1.5.1...v1.5.2) (2022-07-26)
+
+
+### Trivial Changes
+
+* add benchmarks ([#26](https://github.com/achingbrain/uint8arraylist/issues/26)) ([233aa4b](https://github.com/achingbrain/uint8arraylist/commit/233aa4bd1d19032533d367eacccf87fa7d771c6f)), closes [#25](https://github.com/achingbrain/uint8arraylist/issues/25)
+
 ### [1.5.1](https://github.com/achingbrain/uint8arraylist/compare/v1.5.0...v1.5.1) (2022-03-29)
 
 
