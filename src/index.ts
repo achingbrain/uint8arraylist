@@ -146,6 +146,15 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
 
   slice (beginInclusive?: number, endExclusive?: number) {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
+    // similar to bl.slice, if the requested range spans a single internal buffer
+    // then a subarray of that buffer will be returned which shares the original memory range of that Buffer
+    if (bufs.length === 1) {
+      if (length === bufs[0].length) {
+        return bufs[0]
+      } else {
+        return bufs[0].subarray(0, length)
+      }
+    }
 
     return concat(bufs, length)
   }

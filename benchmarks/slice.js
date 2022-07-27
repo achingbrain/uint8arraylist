@@ -2,32 +2,39 @@ import BufferList from 'bl/BufferList.js'
 import { Uint8ArrayList } from '../dist/src/index.js'
 
 const REPEAT = 10000
-let start = Date.now()
 
-for (let i = 0; i < REPEAT; i++) {
-  const buf = new BufferList()
+const testCases = [
+  { name: 'BufferList', factoryFn: () => new BufferList() },
+  { name: 'Uint8ArrayList', factoryFn: () => new Uint8ArrayList() }
+]
 
-  for (let j = 0; j < REPEAT; j++) {
-    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
-    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
-    buf.slice()
-    buf.consume(buf.length)
+for (const { name, factoryFn } of testCases) {
+  const start = Date.now()
+  for (let i = 0; i < REPEAT; i++) {
+    const buf = factoryFn()
+
+    for (let j = 0; j < REPEAT; j++) {
+      buf.append(Buffer.from([i, j, 1, 2, 3, 4, 5]))
+      buf.slice()
+      buf.consume(buf.length)
+    }
   }
+
+  console.info(`${name} - slice() spanning 1 buffer`, Date.now() - start, 'ms') // eslint-disable-line no-console
 }
 
-console.info('slice BufferList', Date.now() - start, 'ms') // eslint-disable-line no-console
+for (const { name, factoryFn } of testCases) {
+  const start = Date.now()
+  for (let i = 0; i < REPEAT; i++) {
+    const buf = factoryFn()
 
-start = Date.now()
-
-for (let i = 0; i < REPEAT; i++) {
-  const buf = new Uint8ArrayList()
-
-  for (let j = 0; j < REPEAT; j++) {
-    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
-    buf.append(Uint8Array.from([i, j, 1, 2, 3, 4, 5]))
-    buf.slice()
-    buf.consume(buf.length)
+    for (let j = 0; j < REPEAT; j++) {
+      buf.append(Buffer.from([i, j, 1, 2, 3, 4, 5]))
+      buf.append(Buffer.from([i, j, 1, 2, 3, 4, 5]))
+      buf.slice()
+      buf.consume(buf.length)
+    }
   }
-}
 
-console.info('slice Uint8ArrayList', Date.now() - start, 'ms') // eslint-disable-line no-console
+  console.info(`${name} - slice() spanning 2 buffers`, Date.now() - start, 'ms') // eslint-disable-line no-console
+}
