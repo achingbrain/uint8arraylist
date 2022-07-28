@@ -144,13 +144,40 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
   }
 
-  slice (beginInclusive?: number, endExclusive?: number) {
+  /**
+   * Extracts a section of an array and returns a new array.
+   *
+   * This is a copy operation as it is with Uint8Arrays and Arrays
+   * - note this is different to the behaviour of Node Buffers.
+   */
+  slice (beginInclusive?: number, endExclusive?: number): Uint8Array {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
     return concat(bufs, length)
   }
 
-  subarray (beginInclusive?: number, endExclusive?: number) {
+  /**
+   * Returns a new Uint8Array from the given start and end element index.
+   *
+   * In the best case where the data extracted comes from a single Uint8Array
+   * internally this is a no-copy operation otherwise it is a copy operation.
+   */
+  subarray (beginInclusive?: number, endExclusive?: number): Uint8Array {
+    const { bufs, length } = this._subList(beginInclusive, endExclusive)
+
+    if (bufs.length === 1) {
+      return bufs[0]
+    }
+
+    return concat(bufs, length)
+  }
+
+  /**
+   * Returns a new Uint8ArrayList from the given start and end element index.
+   *
+   * This is a no-copy operation.
+   */
+  sublist (beginInclusive?: number, endExclusive?: number): Uint8ArrayList {
     const { bufs } = this._subList(beginInclusive, endExclusive)
 
     const list = new Uint8ArrayList()
@@ -159,7 +186,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return list
   }
 
-  _subList (beginInclusive?: number, endExclusive?: number) {
+  private _subList (beginInclusive?: number, endExclusive?: number) {
     if (beginInclusive == null && endExclusive == null) {
       return { bufs: this.bufs, length: this.length }
     }
