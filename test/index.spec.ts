@@ -229,7 +229,7 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.slice(0, 4), 'ascii')).to.equal('abcd')
       expect(toString(bl.slice(0, 3), 'ascii')).to.equal('abc')
       expect(toString(bl.slice(1, 4), 'ascii')).to.equal('bcd')
-      expect(toString(bl.slice(-4, -1), 'ascii')).to.equal('abc')
+      expect(() => toString(bl.slice(-4, -1), 'ascii')).to.throw(RangeError)
     })
 
     it('multiple bytes from multiple buffers', () => {
@@ -249,7 +249,7 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.slice(3, 6), 'ascii')).to.equal('def')
       expect(toString(bl.slice(3, 8), 'ascii')).to.equal('defgh')
       expect(toString(bl.slice(5, 10), 'ascii')).to.equal('fghij')
-      expect(toString(bl.slice(-7, -4), 'ascii')).to.equal('def')
+      expect(() => toString(bl.slice(-7, -4), 'ascii')).to.throw(RangeError)
     })
   })
 
@@ -264,7 +264,7 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.subarray(0, 4).slice(), 'ascii')).to.equal('abcd')
       expect(toString(bl.subarray(0, 3).slice(), 'ascii')).to.equal('abc')
       expect(toString(bl.subarray(1, 4).slice(), 'ascii')).to.equal('bcd')
-      expect(toString(bl.subarray(-4, -1).slice(), 'ascii')).to.equal('abc')
+      expect(() => toString(bl.subarray(-4, -1).slice(), 'ascii')).to.throw(RangeError)
     })
 
     it('multiple bytes from multiple buffers', () => {
@@ -284,7 +284,7 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.subarray(3, 6).slice(), 'ascii')).to.equal('def')
       expect(toString(bl.subarray(3, 8).slice(), 'ascii')).to.equal('defgh')
       expect(toString(bl.subarray(5, 10).slice(), 'ascii')).to.equal('fghij')
-      expect(toString(bl.subarray(-7, -4).slice(), 'ascii')).to.equal('def')
+      expect(() => toString(bl.subarray(-7, -4).slice(), 'ascii')).to.throw(RangeError)
     })
   })
 

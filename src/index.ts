@@ -194,14 +194,6 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     beginInclusive = beginInclusive ?? 0
     endExclusive = endExclusive ?? (this.length > 0 ? this.length : 0)
 
-    if (beginInclusive < 0) {
-      beginInclusive = this.length + beginInclusive
-    }
-
-    if (endExclusive < 0) {
-      endExclusive = this.length + endExclusive
-    }
-
     if (beginInclusive < 0 || endExclusive > this.length) {
       throw new RangeError('index out of bounds')
     }
