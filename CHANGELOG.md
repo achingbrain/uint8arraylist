@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/achingbrain/uint8arraylist/compare/v1.6.0...v2.0.0) (2022-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* subarray now returns a Uint8Array - use sublist if you need a Uint8ArrayList
+
+### Features
+
+* add sublist method and change subarray return type ([#30](https://github.com/achingbrain/uint8arraylist/issues/30)) ([07e044d](https://github.com/achingbrain/uint8arraylist/commit/07e044d75d8e1a162a7eaf9167b559a80753b97b))
+
 ## [1.6.0](https://github.com/achingbrain/uint8arraylist/compare/v1.5.2...v1.6.0) (2022-07-28)
 
 
