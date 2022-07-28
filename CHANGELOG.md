@@ -1,3 +1,15 @@
+## [1.6.0](https://github.com/achingbrain/uint8arraylist/compare/v1.5.2...v1.6.0) (2022-07-28)
+
+
+### Features
+
+* support negative indices in slice/subarray ([#29](https://github.com/achingbrain/uint8arraylist/issues/29)) ([7d08eef](https://github.com/achingbrain/uint8arraylist/commit/7d08eef3d5febf2463c92a5edf6904986da1be3e))
+
+
+### Dependencies
+
+* **dev:** update aegir to 37.x ([#31](https://github.com/achingbrain/uint8arraylist/issues/31)) ([9563b56](https://github.com/achingbrain/uint8arraylist/commit/9563b56256e1f8cf6baba31cea0693ea65257acb))
+
 ### [1.5.2](https://github.com/achingbrain/uint8arraylist/compare/v1.5.1...v1.5.2) (2022-07-26)
 
 
