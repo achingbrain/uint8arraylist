@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/achingbrain/uint8arraylist/compare/v2.0.0...v2.1.0) (2022-08-03)
+
+
+### Features
+
+* add equals method ([#33](https://github.com/achingbrain/uint8arraylist/issues/33)) ([ad6c47d](https://github.com/achingbrain/uint8arraylist/commit/ad6c47dbb301db6fefbc965363e3ddf28dabf52e))
+
 ## [2.0.0](https://github.com/achingbrain/uint8arraylist/compare/v1.6.0...v2.0.0) (2022-07-28)
 
 
