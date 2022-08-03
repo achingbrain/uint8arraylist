@@ -940,6 +940,18 @@ describe('Uint8arrayList', () => {
       expect(listA.equals(listB)).to.be.false('equalled other list with different contents')
     })
 
+    it('should not equal other list with different length', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+
+      expect(listA.equals(listB)).to.be.false('equalled other list with different length')
+    })
+
     it('should not equal non-Uint8ArrayList', () => {
       const listA = new Uint8ArrayList(
         Uint8Array.from([0, 1, 2, 3, 4, 5]),
@@ -948,6 +960,16 @@ describe('Uint8arrayList', () => {
       const listB = 5
 
       expect(listA.equals(listB)).to.be.false('equalled non-Uint8ArrayList')
+    })
+
+    it('should not equal falsy value', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = null
+
+      expect(listA.equals(listB)).to.be.false('equalled falsy value')
     })
   })
 })
