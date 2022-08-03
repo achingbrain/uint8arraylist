@@ -899,4 +899,55 @@ describe('Uint8arrayList', () => {
       expect(isUint8ArrayList(true)).to.be.false()
     })
   })
+
+  describe('equals', () => {
+    it('should equal self', () => {
+      const list = new Uint8ArrayList(Uint8Array.from([0, 1, 2, 3, 4, 5]))
+
+      expect(list.equals(list)).to.be.true('did not equal self')
+    })
+
+    it('should equal other empty list', () => {
+      const listA = new Uint8ArrayList()
+      const listB = new Uint8ArrayList()
+
+      expect(listA.equals(listB)).to.be.true('did not equal other empty list')
+    })
+
+    it('should equal other list with same contents', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+
+      expect(listA.equals(listB)).to.be.true('did not equal other list with same contents')
+    })
+
+    it('should not equal other list with different contents', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([6, 7, 8, 9, 10, 11])
+      )
+
+      expect(listA.equals(listB)).to.be.false('equalled other list with different contents')
+    })
+
+    it('should not equal non-Uint8ArrayList', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = 5
+
+      expect(listA.equals(listB)).to.be.false('equalled non-Uint8ArrayList')
+    })
+  })
 })

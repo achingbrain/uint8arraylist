@@ -1,4 +1,5 @@
-import { concat } from 'uint8arrays'
+import { concat } from 'uint8arrays/concat'
+import { equals } from 'uint8arrays/equals'
 
 const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
@@ -402,5 +403,27 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     view.setFloat64(0, value, littleEndian)
 
     this.write(buf, byteOffset)
+  }
+
+  equals (other: any): other is Uint8ArrayList {
+    if (other == null) {
+      return false
+    }
+
+    if (!(other instanceof Uint8ArrayList)) {
+      return false
+    }
+
+    if (other.bufs.length !== this.bufs.length) {
+      return false
+    }
+
+    for (let i = 0; i < this.bufs.length; i++) {
+      if (!equals(this.bufs[i], other.bufs[i])) {
+        return false
+      }
+    }
+
+    return true
   }
 }
