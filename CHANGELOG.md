@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/achingbrain/uint8arraylist/compare/v2.1.0...v2.1.1) (2022-08-03)
+
+
+### Trivial Changes
+
+* add missing test cases ([#34](https://github.com/achingbrain/uint8arraylist/issues/34)) ([6c872c4](https://github.com/achingbrain/uint8arraylist/commit/6c872c49b163845c12480002e08869ecb1b8ffb6))
+
 ## [2.1.0](https://github.com/achingbrain/uint8arraylist/compare/v2.0.0...v2.1.0) (2022-08-03)
 
 
