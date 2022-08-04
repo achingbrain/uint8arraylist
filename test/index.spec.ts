@@ -243,6 +243,7 @@ describe('Uint8arrayList', () => {
 
       expect(toString(bl.slice(0, 0), 'ascii')).to.equal('')
       expect(toString(bl.slice(0, 1), 'ascii')).to.equal('a')
+      expect(toString(bl.slice(0, 5), 'ascii')).to.equal('abcde')
       expect(toString(bl.slice(0, 10), 'ascii')).to.equal('abcdefghij')
       expect(toString(bl.slice(3, 10), 'ascii')).to.equal('defghij')
       expect(toString(bl.slice(3, 6), 'ascii')).to.equal('def')
@@ -261,10 +262,10 @@ describe('Uint8arrayList', () => {
 
       expect(bl.length).to.equal(4)
 
-      expect(toString(bl.subarray(0, 4).slice(), 'ascii')).to.equal('abcd')
-      expect(toString(bl.subarray(0, 3).slice(), 'ascii')).to.equal('abc')
-      expect(toString(bl.subarray(1, 4).slice(), 'ascii')).to.equal('bcd')
-      expect(toString(bl.subarray(-4, -1).slice(), 'ascii')).to.equal('abc')
+      expect(toString(bl.subarray(0, 4), 'ascii')).to.equal('abcd')
+      expect(toString(bl.subarray(0, 3), 'ascii')).to.equal('abc')
+      expect(toString(bl.subarray(1, 4), 'ascii')).to.equal('bcd')
+      expect(toString(bl.subarray(-4, -1), 'ascii')).to.equal('abc')
     })
 
     it('multiple bytes from multiple buffers', () => {
@@ -276,14 +277,15 @@ describe('Uint8arrayList', () => {
       bl.append(fromString('j'))
 
       expect(bl.length).to.equal(10)
-      expect(toString(bl.subarray(0, 0).slice(), 'ascii')).to.equal('')
-      expect(toString(bl.subarray(0, 1).slice(), 'ascii')).to.equal('a')
-      expect(toString(bl.subarray(0, 10).slice(), 'ascii')).to.equal('abcdefghij')
-      expect(toString(bl.subarray(3, 10).slice(), 'ascii')).to.equal('defghij')
-      expect(toString(bl.subarray(3, 6).slice(), 'ascii')).to.equal('def')
-      expect(toString(bl.subarray(3, 8).slice(), 'ascii')).to.equal('defgh')
-      expect(toString(bl.subarray(5, 10).slice(), 'ascii')).to.equal('fghij')
-      expect(toString(bl.subarray(-7, -4).slice(), 'ascii')).to.equal('def')
+      expect(toString(bl.subarray(0, 0), 'ascii')).to.equal('')
+      expect(toString(bl.subarray(0, 1), 'ascii')).to.equal('a')
+      expect(toString(bl.subarray(0, 5), 'ascii')).to.equal('abcde')
+      expect(toString(bl.subarray(0, 10), 'ascii')).to.equal('abcdefghij')
+      expect(toString(bl.subarray(3, 10), 'ascii')).to.equal('defghij')
+      expect(toString(bl.subarray(3, 6), 'ascii')).to.equal('def')
+      expect(toString(bl.subarray(3, 8), 'ascii')).to.equal('defgh')
+      expect(toString(bl.subarray(5, 10), 'ascii')).to.equal('fghij')
+      expect(toString(bl.subarray(-7, -4), 'ascii')).to.equal('def')
       expect(toString(bl.subarray(4, 7), 'ascii')).to.equal('efg')
     })
   })
@@ -313,6 +315,7 @@ describe('Uint8arrayList', () => {
       expect(bl.length).to.equal(10)
       expect(toString(bl.sublist(0, 0).slice(), 'ascii')).to.equal('')
       expect(toString(bl.sublist(0, 1).slice(), 'ascii')).to.equal('a')
+      expect(toString(bl.sublist(0, 5).slice(), 'ascii')).to.equal('abcde')
       expect(toString(bl.sublist(0, 10).slice(), 'ascii')).to.equal('abcdefghij')
       expect(toString(bl.sublist(3, 10).slice(), 'ascii')).to.equal('defghij')
       expect(toString(bl.sublist(3, 6).slice(), 'ascii')).to.equal('def')
@@ -380,6 +383,23 @@ describe('Uint8arrayList', () => {
         new Uint8Array([103, 104, 105]),
         new Uint8Array([106, 107, 108]),
         new Uint8Array([109, 110, 111, 112]),
+        new Uint8Array([113, 114, 115, 116, 117]),
+        new Uint8Array([118, 119, 120, 121, 122])
+      ])
+
+      expect(bl.length).to.equal(26)
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+
+    it('appendAll accepts multiple Uint8Arrays and Uint8ArrayLists', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.appendAll([
+        new Uint8Array([97, 98, 99]),
+        Uint8Array.from([100, 101, 102]),
+        new Uint8ArrayList(new Uint8Array([103, 104, 105])),
+        new Uint8Array([106, 107, 108]),
+        new Uint8ArrayList(new Uint8Array([109, 110, 111, 112])),
         new Uint8Array([113, 114, 115, 116, 117]),
         new Uint8Array([118, 119, 120, 121, 122])
       ])
