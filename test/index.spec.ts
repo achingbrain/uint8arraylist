@@ -1149,4 +1149,28 @@ describe('Uint8arrayList', () => {
       expect(listA.equals(listB)).to.be.false('equalled falsy value')
     })
   })
+
+  describe('toUint8Array', () => {
+    it('returns same buffer if single buffer', () => {
+      const bl = new Uint8ArrayList()
+
+      const buf = fromString('abcd')
+      bl.append(buf)
+      expect(bl.toUint8Array()).to.equal(buf)
+    })
+    it('returns copied buffer if copy=true', () => {
+      const bl = new Uint8ArrayList()
+
+      const buf = fromString('abcd')
+      bl.append(buf)
+      const res = bl.toUint8Array(true)
+      expect(res).to.not.equal(buf)
+      expect(toString(res)).to.equal('abcd')
+    })
+    it('returns empty buffer correctly', () => {
+      const bl = new Uint8ArrayList()
+      const res = bl.toUint8Array(false)
+      expect(toString(res)).to.equal('')
+    })
+  })
 })

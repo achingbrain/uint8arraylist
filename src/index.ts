@@ -307,6 +307,16 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return { bufs, length: endExclusive - beginInclusive }
   }
 
+  /**
+   * Returns a Uint8Array with the full contents of the Uint8ArrayList.
+   *
+   * If copy is unset and the list contains a single buffer, that buffer
+   * is returned without copying. Otherwise, a full copy is returned.
+   */
+  toUint8Array (copy?: boolean): Uint8Array {
+    return copy ? this.slice() : this.subarray()
+  }
+
   getInt8 (byteOffset: number): number {
     const buf = this.subarray(byteOffset, byteOffset + 1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
