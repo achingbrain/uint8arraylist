@@ -253,6 +253,18 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.slice(-7, -4), 'ascii')).to.equal('def')
       expect(toString(bl.slice(4, 7), 'ascii')).to.equal('efg')
     })
+
+    it('errors out of range', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abc'))
+      bl.append(fromString('efg'))
+
+      expect(bl.length).to.equal(6)
+
+      expect(() => bl.slice(0, 7)).to.throw(RangeError)
+      expect(() => bl.slice(-20)).to.throw(RangeError)
+    })
   })
 
   describe('subarray', () => {
@@ -290,6 +302,18 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.subarray(-7, -4), 'ascii')).to.equal('def')
       expect(toString(bl.subarray(4, 7), 'ascii')).to.equal('efg')
     })
+
+    it('errors out of range', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abc'))
+      bl.append(fromString('efg'))
+
+      expect(bl.length).to.equal(6)
+
+      expect(() => bl.subarray(0, 7)).to.throw(RangeError)
+      expect(() => bl.subarray(-20)).to.throw(RangeError)
+    })
   })
 
   describe('sublist', () => {
@@ -326,6 +350,18 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.sublist(5, 10).slice(), 'ascii')).to.equal('fghij')
       expect(toString(bl.sublist(-7, -4).slice(), 'ascii')).to.equal('def')
       expect(toString(bl.sublist(4, 7).slice(), 'ascii')).to.equal('efg')
+    })
+
+    it('errors out of range', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abc'))
+      bl.append(fromString('efg'))
+
+      expect(bl.length).to.equal(6)
+
+      expect(() => bl.sublist(0, 7)).to.throw(RangeError)
+      expect(() => bl.sublist(-20)).to.throw(RangeError)
     })
   })
 

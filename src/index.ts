@@ -203,7 +203,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
 
     if (beginInclusive < 0 || endExclusive > this.length) {
-      throw new RangeError('index out of bounds')
+      throw new RangeError('index is out of bounds')
     }
 
     if (beginInclusive === endExclusive) {
