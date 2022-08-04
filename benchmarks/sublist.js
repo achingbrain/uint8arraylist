@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
 /*
-$ node benchmarks/append.js
-$ npx playwright-test benchmarks/append.js --runner benchmark
+$ node benchmarks/sublist.js
+$ npx playwright-test benchmarks/sublist.js --runner benchmark
 */
 
 import Benchmark from 'benchmark'
@@ -12,19 +12,19 @@ import { Uint8ArrayList } from '../dist/src/index.js'
 const suite = new Benchmark.Suite()
 
 suite
-  .add('append BufferList', () => {
+  .add('shallowSlice BufferList', () => {
     const buf = new BufferList()
-
-    for (let j = 0; j < 10; j++) {
-      buf.append(Uint8Array.from([j, 1, 2, 3, 4, 5]))
-    }
+    buf.append(Uint8Array.from([0, 1, 2, 3, 4, 5]))
+    buf.append(Uint8Array.from([6, 7, 8, 9, 10, 11]))
+    buf.shallowSlice()
+    buf.shallowSlice(3, 10)
   })
-  .add('append Uint8ArrayList', () => {
+  .add('sublist Uint8ArrayList', () => {
     const buf = new Uint8ArrayList()
-
-    for (let j = 0; j < 10; j++) {
-      buf.append(Uint8Array.from([j, 1, 2, 3, 4, 5]))
-    }
+    buf.append(Uint8Array.from([0, 1, 2, 3, 4, 5]))
+    buf.append(Uint8Array.from([6, 7, 8, 9, 10, 11]))
+    buf.sublist()
+    buf.sublist(3, 10)
   })
 
 suite
