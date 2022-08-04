@@ -6,8 +6,8 @@ const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
 type Appendable = Uint8ArrayList | Uint8Array
 
-function findBufAndOffset (bufs: Uint8Array[], index: number, totalLength: number) {
-  if (index == null || index < 0 || index >= totalLength) {
+function findBufAndOffset (bufs: Uint8Array[], index: number) {
+  if (index == null || index < 0) {
     throw new RangeError('index is out of bounds')
   }
 
@@ -90,7 +90,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    * Read the value at `index`
    */
   get (index: number) {
-    const res = findBufAndOffset(this.bufs, index, this.length)
+    const res = findBufAndOffset(this.bufs, index)
 
     return res.buf[res.index]
   }
@@ -99,7 +99,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    * Set the value at `index` to `value`
    */
   set (index: number, value: number) {
-    const res = findBufAndOffset(this.bufs, index, this.length)
+    const res = findBufAndOffset(this.bufs, index)
 
     res.buf[res.index] = value
   }
