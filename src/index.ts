@@ -59,14 +59,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   /**
-   * Add one or more `bufs` to this Uint8ArrayList
+   * Add one or more `bufs` to the end of this Uint8ArrayList
    */
   append (...bufs: Appendable[]) {
     this.appendAll(bufs)
   }
 
   /**
-   * Add all `bufs` to this Uint8ArrayList
+   * Add all `bufs` to the end of this Uint8ArrayList
    */
   appendAll (bufs: Appendable[]) {
     let length = 0
@@ -77,9 +77,37 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
         this.bufs.push(buf)
       } else if (isUint8ArrayList(buf)) {
         length += buf.byteLength
-        this.bufs = this.bufs.concat(buf.bufs)
+        this.bufs.push(...buf.bufs)
       } else {
         throw new Error('Could not append value, must be an Uint8Array or a Uint8ArrayList')
+      }
+    }
+
+    this.length += length
+  }
+
+  /**
+   * Add one or more `bufs` to the start of this Uint8ArrayList
+   */
+  prepend (...bufs: Appendable[]) {
+    this.prependAll(bufs)
+  }
+
+  /**
+   * Add all `bufs` to the start of this Uint8ArrayList
+   */
+  prependAll (bufs: Appendable[]) {
+    let length = 0
+
+    for (const buf of bufs.reverse()) {
+      if (buf instanceof Uint8Array) {
+        length += buf.byteLength
+        this.bufs.unshift(buf)
+      } else if (isUint8ArrayList(buf)) {
+        length += buf.byteLength
+        this.bufs.unshift(...buf.bufs)
+      } else {
+        throw new Error('Could not prepend value, must be an Uint8Array or a Uint8ArrayList')
       }
     }
 

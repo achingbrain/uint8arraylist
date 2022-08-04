@@ -9,26 +9,23 @@ import Benchmark from 'benchmark'
 import BufferList from 'bl/BufferList.js'
 import { Uint8ArrayList } from '../dist/src/index.js'
 
+const bufs = []
+for (let j = 0; j < 10; j++) {
+  bufs.push(Uint8Array.from([j, 1, 2, 3, 4, 5]))
+}
+
 const suite = new Benchmark.Suite()
 
 suite
   .add('slice BufferList', () => {
-    const buf = new BufferList()
+    const list = new BufferList(bufs)
 
-    for (let j = 0; j < 10; j++) {
-      buf.append(Uint8Array.from([j, 1, 2, 3, 4, 5]))
-    }
-
-    buf.slice()
+    list.slice()
   })
   .add('slice Uint8ArrayList', () => {
-    const buf = new Uint8ArrayList()
+    const list = new Uint8ArrayList(...bufs)
 
-    for (let j = 0; j < 10; j++) {
-      buf.append(Uint8Array.from([j, 1, 2, 3, 4, 5]))
-    }
-
-    buf.slice()
+    list.slice()
   })
 
 suite

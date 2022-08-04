@@ -20,16 +20,12 @@ suite
   .add('append BufferList', () => {
     const list = new BufferList()
 
-    for (const buf of bufs) {
-      list.append(buf)
-    }
+    list.append(bufs)
   })
-  .add('append Uint8ArrayList', () => {
+  .add('appendAll Uint8ArrayList', () => {
     const list = new Uint8ArrayList()
 
-    for (const buf of bufs) {
-      list.append(buf)
-    }
+    list.appendAll(bufs)
   })
 
 suite
