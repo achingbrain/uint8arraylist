@@ -225,7 +225,6 @@ describe('Uint8arrayList', () => {
       bl.append(fromString('abcd'))
 
       expect(bl.length).to.equal(4)
-
       expect(toString(bl.slice(0, 4), 'ascii')).to.equal('abcd')
       expect(toString(bl.slice(0, 3), 'ascii')).to.equal('abc')
       expect(toString(bl.slice(1, 4), 'ascii')).to.equal('bcd')
@@ -250,6 +249,7 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.slice(3, 8), 'ascii')).to.equal('defgh')
       expect(toString(bl.slice(5, 10), 'ascii')).to.equal('fghij')
       expect(toString(bl.slice(-7, -4), 'ascii')).to.equal('def')
+      expect(toString(bl.slice(4, 7), 'ascii')).to.equal('efg')
     })
   })
 
@@ -276,7 +276,6 @@ describe('Uint8arrayList', () => {
       bl.append(fromString('j'))
 
       expect(bl.length).to.equal(10)
-
       expect(toString(bl.subarray(0, 0).slice(), 'ascii')).to.equal('')
       expect(toString(bl.subarray(0, 1).slice(), 'ascii')).to.equal('a')
       expect(toString(bl.subarray(0, 10).slice(), 'ascii')).to.equal('abcdefghij')
@@ -285,6 +284,42 @@ describe('Uint8arrayList', () => {
       expect(toString(bl.subarray(3, 8).slice(), 'ascii')).to.equal('defgh')
       expect(toString(bl.subarray(5, 10).slice(), 'ascii')).to.equal('fghij')
       expect(toString(bl.subarray(-7, -4).slice(), 'ascii')).to.equal('def')
+      expect(toString(bl.subarray(4, 7), 'ascii')).to.equal('efg')
+    })
+  })
+
+  describe('sublist', () => {
+    it('multi bytes from single buffer', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+
+      expect(bl.length).to.equal(4)
+
+      expect(toString(bl.sublist(0, 4).slice(), 'ascii')).to.equal('abcd')
+      expect(toString(bl.sublist(0, 3).slice(), 'ascii')).to.equal('abc')
+      expect(toString(bl.sublist(1, 4).slice(), 'ascii')).to.equal('bcd')
+      expect(toString(bl.sublist(-4, -1).slice(), 'ascii')).to.equal('abc')
+    })
+
+    it('multiple bytes from multiple buffers', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.append(fromString('abcd'))
+      bl.append(fromString('efg'))
+      bl.append(fromString('hi'))
+      bl.append(fromString('j'))
+
+      expect(bl.length).to.equal(10)
+      expect(toString(bl.sublist(0, 0).slice(), 'ascii')).to.equal('')
+      expect(toString(bl.sublist(0, 1).slice(), 'ascii')).to.equal('a')
+      expect(toString(bl.sublist(0, 10).slice(), 'ascii')).to.equal('abcdefghij')
+      expect(toString(bl.sublist(3, 10).slice(), 'ascii')).to.equal('defghij')
+      expect(toString(bl.sublist(3, 6).slice(), 'ascii')).to.equal('def')
+      expect(toString(bl.sublist(3, 8).slice(), 'ascii')).to.equal('defgh')
+      expect(toString(bl.sublist(5, 10).slice(), 'ascii')).to.equal('fghij')
+      expect(toString(bl.sublist(-7, -4).slice(), 'ascii')).to.equal('def')
+      expect(toString(bl.sublist(4, 7).slice(), 'ascii')).to.equal('efg')
     })
   })
 

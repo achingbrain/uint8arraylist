@@ -225,7 +225,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       // for next loop
       offset = bufEnd
 
-      if (beginInclusive > bufEnd) {
+      if (beginInclusive >= bufEnd) {
         // start after this buf
         continue
       }
@@ -234,20 +234,21 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       const sliceEndsInBuf = endExclusive > bufStart && endExclusive <= bufEnd
 
       if (sliceStartInBuf && sliceEndsInBuf) {
-        // slice is wholly contained in this buffer
-        if (beginInclusive === 0 && endExclusive === buf.byteLength) {
+        // slice is wholly contained within this buffer
+        if (beginInclusive === bufStart && endExclusive === bufEnd) {
           // requested whole buffer
           bufs.push(buf)
           break
         }
 
         // requested part of buffer
-        bufs.push(buf.subarray(beginInclusive, endExclusive))
+        const start = beginInclusive - bufStart
+        bufs.push(buf.subarray(start, start + (endExclusive - beginInclusive)))
         break
       }
 
       if (sliceStartInBuf) {
-        // slice is partially contained in this buffer
+        // slice starts in this buffer
         if (beginInclusive === 0) {
           // requested whole buffer
           bufs.push(buf)
