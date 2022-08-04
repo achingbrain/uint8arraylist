@@ -3,3 +3,5 @@ dist
 package-lock.json
 .nyc_output
 .coverage
+/.log
+/yarn.lock
