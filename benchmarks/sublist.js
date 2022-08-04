@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /*
 $ node benchmarks/sublist.js
 $ npx playwright-test benchmarks/sublist.js --runner benchmark
