@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/achingbrain/uint8arraylist/compare/v2.1.2...v2.1.3) (2022-08-04)
+
+
+### Bug Fixes
+
+* improve sublist ([#36](https://github.com/achingbrain/uint8arraylist/issues/36)) ([ce93414](https://github.com/achingbrain/uint8arraylist/commit/ce93414e2acdc374b9200125a8144508c39b227e))
+
 ## [2.1.2](https://github.com/achingbrain/uint8arraylist/compare/v2.1.1...v2.1.2) (2022-08-04)
 
 
