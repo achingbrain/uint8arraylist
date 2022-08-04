@@ -1,5 +1,6 @@
 import { concat } from 'uint8arrays/concat'
 import { equals } from 'uint8arrays/equals'
+import { allocUnsafe, alloc } from 'uint8arrays/alloc'
 
 const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
@@ -75,7 +76,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
         length += buf.byteLength
         this.bufs.push(buf)
       } else if (isUint8ArrayList(buf)) {
-        length += buf.length
+        length += buf.byteLength
         this.bufs = this.bufs.concat(buf.bufs)
       } else {
         throw new Error('Could not append value, must be an Uint8Array or a Uint8ArrayList')
@@ -158,7 +159,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   /**
-   * Returns a new Uint8Array from the given start and end element index.
+   * Returns a alloc from the given start and end element index.
    *
    * In the best case where the data extracted comes from a single Uint8Array
    * internally this is a no-copy operation otherwise it is a copy operation.
@@ -174,96 +175,118 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   /**
-   * Returns a new Uint8ArrayList from the given start and end element index.
+   * Returns a allocList from the given start and end element index.
    *
    * This is a no-copy operation.
    */
   sublist (beginInclusive?: number, endExclusive?: number): Uint8ArrayList {
-    const { bufs } = this._subList(beginInclusive, endExclusive)
+    const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
     const list = new Uint8ArrayList()
-    list.appendAll(bufs)
+    list.length = length
+    // don't loop, just set the bufs
+    list.bufs = bufs
 
     return list
   }
 
   private _subList (beginInclusive?: number, endExclusive?: number) {
-    if (beginInclusive == null && endExclusive == null) {
-      return { bufs: this.bufs, length: this.length }
-    }
-
     beginInclusive = beginInclusive ?? 0
-    endExclusive = endExclusive ?? (this.length > 0 ? this.length : 0)
+    endExclusive = endExclusive ?? this.length
 
     if (beginInclusive < 0) {
-      beginInclusive = this.length + beginInclusive
+        beginInclusive = this.length + beginInclusive;
     }
 
     if (endExclusive < 0) {
-      endExclusive = this.length + endExclusive
+        endExclusive = this.length + endExclusive;
     }
 
     if (beginInclusive < 0 || endExclusive > this.length) {
-      throw new RangeError('index out of bounds')
+        throw new RangeError('index out of bounds');
     }
 
     if (beginInclusive === endExclusive) {
-      return { bufs: [], length: 0 }
+        return { bufs: [], length: 0 };
+    }
+
+    if (beginInclusive === 0 && endExclusive === this.length) {
+        return { bufs: this.bufs, length: this.length };
     }
 
     const bufs: Uint8Array[] = []
     let offset = 0
 
-    for (const buf of this.bufs) {
+    for (let i = 0; i < this.bufs.length; i++) {
+      const buf = this.bufs[i]
       const bufStart = offset
       const bufEnd = bufStart + buf.byteLength
-      const sliceStartInBuf = beginInclusive >= bufStart && beginInclusive < bufEnd
-      const sliceEndsInBuf = endExclusive > bufStart && endExclusive <= bufEnd
-      const bufInSlice = beginInclusive < bufStart && endExclusive >= bufEnd
+
+      // for next loop
       offset = bufEnd
 
-      let startIndex: number | undefined
-      let endIndex: number | undefined
-
-      if (sliceStartInBuf) {
-        startIndex = beginInclusive - bufStart
-        endIndex = buf.byteLength
+      if (beginInclusive > bufEnd) {
+        // start after this buf
+        continue
       }
 
-      if (sliceEndsInBuf) {
-        endIndex = endExclusive - bufStart
+      const sliceStartInBuf = beginInclusive >= bufStart && beginInclusive < bufEnd
+      const sliceEndsInBuf = endExclusive > bufStart && endExclusive <= bufEnd
 
-        if (startIndex == null) {
-          startIndex = 0
+      if (sliceStartInBuf && sliceEndsInBuf) {
+        // slice is wholly contained in this buffer
+        if (beginInclusive === 0 && endExclusive === buf.byteLength) {
+          // requested whole buffer
+          bufs.push(buf)
+          break
         }
-      }
 
-      if (bufInSlice) {
-        startIndex = 0
-        endIndex = buf.byteLength
-      }
-
-      if (startIndex != null && endIndex != null) {
-        bufs.push(buf.subarray(startIndex, endIndex))
-      }
-
-      if (sliceEndsInBuf) {
+        // requested part of buffer
+        bufs.push(buf.subarray(beginInclusive, endExclusive))
         break
       }
+
+      if (sliceStartInBuf) {
+        // slice is partially contained in this buffer
+        if (beginInclusive === 0) {
+          // requested whole buffer
+          bufs.push(buf)
+          continue
+        }
+
+        // requested part of buffer
+        bufs.push(buf.subarray(beginInclusive - bufStart))
+        continue
+      }
+
+      if (sliceEndsInBuf) {
+        if (endExclusive === bufEnd) {
+          // requested whole buffer
+          bufs.push(buf)
+          break
+        }
+
+        // requested part of buffer
+        bufs.push(buf.subarray(0, endExclusive - bufStart))
+        break
+      }
+
+      // slice started before this buffer and ends after it
+      bufs.push(buf)
     }
 
     return { bufs, length: endExclusive - beginInclusive }
   }
 
   getInt8 (byteOffset: number): number {
-    const buf = this.slice(byteOffset, byteOffset + 1)
+    const buf = this.subarray(byteOffset, byteOffset + 1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getInt8(0)
   }
 
   setInt8 (byteOffset: number, value: number): void {
-    const buf = new Uint8Array(1)
+    const buf = allocUnsafe(1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setInt8(0, value)
 
@@ -271,14 +294,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getInt16 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 2)
+    const buf = this.subarray(byteOffset, byteOffset + 2)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getInt16(0, littleEndian)
   }
 
   setInt16 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(2)
+    const buf = alloc(2)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setInt16(0, value, littleEndian)
 
@@ -286,14 +309,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getInt32 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 4)
+    const buf = this.subarray(byteOffset, byteOffset + 4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getInt32(0, littleEndian)
   }
 
   setInt32 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(4)
+    const buf = alloc(4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setInt32(0, value, littleEndian)
 
@@ -301,14 +324,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getBigInt64 (byteOffset: number, littleEndian?: boolean): bigint {
-    const buf = this.slice(byteOffset, byteOffset + 8)
+    const buf = this.subarray(byteOffset, byteOffset + 8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getBigInt64(0, littleEndian)
   }
 
   setBigInt64 (byteOffset: number, value: bigint, littleEndian?: boolean): void {
-    const buf = new Uint8Array(8)
+    const buf = alloc(8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setBigInt64(0, value, littleEndian)
 
@@ -316,14 +339,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getUint8 (byteOffset: number): number {
-    const buf = this.slice(byteOffset, byteOffset + 1)
+    const buf = this.subarray(byteOffset, byteOffset + 1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getUint8(0)
   }
 
   setUint8 (byteOffset: number, value: number): void {
-    const buf = new Uint8Array(1)
+    const buf = allocUnsafe(1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setUint8(0, value)
 
@@ -331,14 +354,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getUint16 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 2)
+    const buf = this.subarray(byteOffset, byteOffset + 2)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getUint16(0, littleEndian)
   }
 
   setUint16 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(2)
+    const buf = alloc(2)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setUint16(0, value, littleEndian)
 
@@ -346,14 +369,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getUint32 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 4)
+    const buf = this.subarray(byteOffset, byteOffset + 4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getUint32(0, littleEndian)
   }
 
   setUint32 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(4)
+    const buf = alloc(4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setUint32(0, value, littleEndian)
 
@@ -361,14 +384,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getBigUint64 (byteOffset: number, littleEndian?: boolean): bigint {
-    const buf = this.slice(byteOffset, byteOffset + 8)
+    const buf = this.subarray(byteOffset, byteOffset + 8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getBigUint64(0, littleEndian)
   }
 
   setBigUint64 (byteOffset: number, value: bigint, littleEndian?: boolean): void {
-    const buf = new Uint8Array(8)
+    const buf = alloc(8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setBigUint64(0, value, littleEndian)
 
@@ -376,14 +399,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getFloat32 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 4)
+    const buf = this.subarray(byteOffset, byteOffset + 4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getFloat32(0, littleEndian)
   }
 
   setFloat32 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(4)
+    const buf = alloc(4)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setFloat32(0, value, littleEndian)
 
@@ -391,14 +414,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   getFloat64 (byteOffset: number, littleEndian?: boolean): number {
-    const buf = this.slice(byteOffset, byteOffset + 8)
+    const buf = this.subarray(byteOffset, byteOffset + 8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
 
     return view.getFloat64(0, littleEndian)
   }
 
   setFloat64 (byteOffset: number, value: number, littleEndian?: boolean): void {
-    const buf = new Uint8Array(8)
+    const buf = alloc(8)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
     view.setFloat64(0, value, littleEndian)
 
