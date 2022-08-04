@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/achingbrain/uint8arraylist/compare/v2.1.3...v2.2.0) (2022-08-04)
+
+
+### Features
+
+* add prepend methods ([#37](https://github.com/achingbrain/uint8arraylist/issues/37)) ([3764719](https://github.com/achingbrain/uint8arraylist/commit/3764719ea147d8a0588be1cc9fe1179be137ef5d))
+
 ## [2.1.3](https://github.com/achingbrain/uint8arraylist/compare/v2.1.2...v2.1.3) (2022-08-04)
 
 
