@@ -195,23 +195,23 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     endExclusive = endExclusive ?? this.length
 
     if (beginInclusive < 0) {
-        beginInclusive = this.length + beginInclusive;
+      beginInclusive = this.length + beginInclusive
     }
 
     if (endExclusive < 0) {
-        endExclusive = this.length + endExclusive;
+      endExclusive = this.length + endExclusive
     }
 
     if (beginInclusive < 0 || endExclusive > this.length) {
-        throw new RangeError('index out of bounds');
+      throw new RangeError('index out of bounds')
     }
 
     if (beginInclusive === endExclusive) {
-        return { bufs: [], length: 0 };
+      return { bufs: [], length: 0 }
     }
 
     if (beginInclusive === 0 && endExclusive === this.length) {
-        return { bufs: this.bufs, length: this.length };
+      return { bufs: this.bufs, length: this.length }
     }
 
     const bufs: Uint8Array[] = []
