@@ -448,6 +448,89 @@ describe('Uint8arrayList', () => {
     })
   })
 
+  describe('prepend', () => {
+    it('prepend accepts Uint8Arrays', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.prepend(new Uint8Array([118, 119, 120, 121, 122]))
+      bl.prepend(new Uint8Array([113, 114, 115, 116, 117]))
+      bl.prepend(new Uint8Array([109, 110, 111, 112]))
+      bl.prepend(new Uint8Array([106, 107, 108]))
+      bl.prepend(new Uint8Array([103, 104, 105]))
+      bl.prepend(Uint8Array.from([100, 101, 102]))
+      bl.prepend(new Uint8Array([97, 98, 99]))
+
+      expect(bl.length).to.equal(26)
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+
+    it('prepend accepts multiple Uint8Arrays', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.prepend(
+        new Uint8Array([97, 98, 99]),
+        Uint8Array.from([100, 101, 102]),
+        new Uint8Array([103, 104, 105]),
+        new Uint8Array([106, 107, 108]),
+        new Uint8Array([109, 110, 111, 112]),
+        new Uint8Array([113, 114, 115, 116, 117]),
+        new Uint8Array([118, 119, 120, 121, 122])
+      )
+
+      expect(bl.length).to.equal(26)
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+
+    it('only appends appendable values', () => {
+      const bl = new Uint8ArrayList()
+
+      // @ts-expect-error invalid params
+      expect(() => bl.prepend('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.prepend(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.prepend(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      // @ts-expect-error invalid params
+      expect(() => bl.prepend([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+    })
+  })
+
+  describe('prependAll', () => {
+    it('prependAll accepts multiple Uint8Arrays', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.prependAll([
+        new Uint8Array([97, 98, 99]),
+        Uint8Array.from([100, 101, 102]),
+        new Uint8Array([103, 104, 105]),
+        new Uint8Array([106, 107, 108]),
+        new Uint8Array([109, 110, 111, 112]),
+        new Uint8Array([113, 114, 115, 116, 117]),
+        new Uint8Array([118, 119, 120, 121, 122])
+      ])
+
+      expect(bl.length).to.equal(26)
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+
+    it('prependAll accepts multiple Uint8Arrays and Uint8ArrayLists', () => {
+      const bl = new Uint8ArrayList()
+
+      bl.prependAll([
+        new Uint8Array([97, 98, 99]),
+        Uint8Array.from([100, 101, 102]),
+        new Uint8ArrayList(new Uint8Array([103, 104, 105])),
+        new Uint8Array([106, 107, 108]),
+        new Uint8ArrayList(new Uint8Array([109, 110, 111, 112])),
+        new Uint8Array([113, 114, 115, 116, 117]),
+        new Uint8Array([118, 119, 120, 121, 122])
+      ])
+
+      expect(bl.length).to.equal(26)
+      expect(toString(bl.slice(), 'ascii')).to.equal('abcdefghijklmnopqrstuvwxyz')
+    })
+  })
+
   describe('consume', () => {
     it('consuming from multiple buffers', () => {
       const bl = new Uint8ArrayList()
