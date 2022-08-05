@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/achingbrain/uint8arraylist/compare/v2.2.0...v2.3.0) (2022-08-05)
+
+
+### Features
+
+* add fromUint8Arrays factory method ([#39](https://github.com/achingbrain/uint8arraylist/issues/39)) ([b970bdc](https://github.com/achingbrain/uint8arraylist/commit/b970bdcedce62c165510ab0005b16a2e3a6edf61))
+
 ## [2.2.0](https://github.com/achingbrain/uint8arraylist/compare/v2.1.3...v2.2.0) (2022-08-04)
 
 
