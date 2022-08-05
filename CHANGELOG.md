@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/achingbrain/uint8arraylist/compare/v2.3.0...v2.3.1) (2022-08-05)
+
+
+### Documentation
+
+* remove reference to toUint8Array ([#40](https://github.com/achingbrain/uint8arraylist/issues/40)) ([3bed0bb](https://github.com/achingbrain/uint8arraylist/commit/3bed0bbfa114375f1bb91808df926a70a080051b))
+
 ## [2.3.0](https://github.com/achingbrain/uint8arraylist/compare/v2.2.0...v2.3.0) (2022-08-05)
 
 
