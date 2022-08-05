@@ -47,7 +47,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.bufs = []
     this.length = 0
 
-    if (data.length) {
+    if (data.length > 0) {
       this.appendAll(data)
     }
   }
