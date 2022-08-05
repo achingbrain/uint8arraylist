@@ -1149,4 +1149,29 @@ describe('Uint8arrayList', () => {
       expect(listA.equals(listB)).to.be.false('equalled falsy value')
     })
   })
+
+  describe('fromUint8Arrays', () => {
+    it('should create a list from an array of Uint8Arrays', () => {
+      const listA = new Uint8ArrayList(
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      )
+      const listB = Uint8ArrayList.fromUint8Arrays([
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      ])
+
+      expect(listA.equals(listB)).to.be.true('did not match other list')
+      expect(listB).to.have.property('byteLength', 12, 'did not calculate length property')
+    })
+
+    it('should support passing pre-calculated length of Uint8Arrays', () => {
+      const list = Uint8ArrayList.fromUint8Arrays([
+        Uint8Array.from([0, 1, 2, 3, 4, 5]),
+        Uint8Array.from([0, 1, 2, 3, 4, 5])
+      ], 11) // byte length is actually 12
+
+      expect(list).to.have.property('byteLength', 11, 'did not honour length property')
+    })
+  })
 })

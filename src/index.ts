@@ -47,7 +47,9 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     this.bufs = []
     this.length = 0
 
-    this.appendAll(data)
+    if (data.length) {
+      this.appendAll(data)
+    }
   }
 
   * [Symbol.iterator] () {
@@ -477,5 +479,22 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
 
     return true
+  }
+
+  /**
+   * Create a Uint8ArrayList from a pre-existing list of Uint8Arrays.  Use this
+   * method if you know the total size of all the Uint8Arrays ahead of time.
+   */
+  static fromUint8Arrays (bufs: Uint8Array[], length?: number): Uint8ArrayList {
+    const list = new Uint8ArrayList()
+    list.bufs = bufs
+
+    if (length == null) {
+      length = bufs.reduce((acc, curr) => acc + curr.byteLength, 0)
+    }
+
+    list.length = length
+
+    return list
   }
 }
