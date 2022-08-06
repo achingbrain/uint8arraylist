@@ -241,7 +241,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
 
     if (beginInclusive === 0 && endExclusive === this.length) {
-      return { bufs: this.bufs, length: this.length }
+      return { bufs: [...this.bufs], length: this.length }
     }
 
     const bufs: Uint8Array[] = []
