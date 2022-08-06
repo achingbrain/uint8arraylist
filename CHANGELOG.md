@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/achingbrain/uint8arraylist/compare/v2.3.1...v2.3.2) (2022-08-06)
+
+
+### Bug Fixes
+
+* return copy of internal buffer list ([#41](https://github.com/achingbrain/uint8arraylist/issues/41)) ([1a3cb65](https://github.com/achingbrain/uint8arraylist/commit/1a3cb658cbd226765bbc6f243504bce2626411c5))
+
 ## [2.3.1](https://github.com/achingbrain/uint8arraylist/compare/v2.3.0...v2.3.1) (2022-08-05)
 
 
