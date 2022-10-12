@@ -1,3 +1,15 @@
+## [2.3.3](https://github.com/achingbrain/uint8arraylist/compare/v2.3.2...v2.3.3) (2022-10-12)
+
+
+### Dependencies
+
+* bump uint8arrays from 3.x.x to 4.x.x ([#43](https://github.com/achingbrain/uint8arraylist/issues/43)) ([c47b4de](https://github.com/achingbrain/uint8arraylist/commit/c47b4de92fd709cd7367c739ac2671ba8fa31fa3))
+
+
+### Trivial Changes
+
+* update project ([#44](https://github.com/achingbrain/uint8arraylist/issues/44)) ([26da7bc](https://github.com/achingbrain/uint8arraylist/commit/26da7bc3d1d31df351b2e50a55c35c19e2966e12))
+
 ## [2.3.2](https://github.com/achingbrain/uint8arraylist/compare/v2.3.1...v2.3.2) (2022-08-06)
 
 
