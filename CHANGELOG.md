@@ -1,3 +1,15 @@
+## [2.4.1](https://github.com/achingbrain/uint8arraylist/compare/v2.4.0...v2.4.1) (2022-11-24)
+
+
+### Dependencies
+
+* **dev:** bump bl from 5.1.0 to 6.0.0 ([#46](https://github.com/achingbrain/uint8arraylist/issues/46)) ([61b168b](https://github.com/achingbrain/uint8arraylist/commit/61b168be4dfdae1858d59850cc38ce0e14e1b30e))
+
+
+### Trivial Changes
+
+* update project config ([#47](https://github.com/achingbrain/uint8arraylist/issues/47)) ([b43fdc8](https://github.com/achingbrain/uint8arraylist/commit/b43fdc892f7ab38d3582d8af2927afa1694fb08a))
+
 ## [2.4.0](https://github.com/achingbrain/uint8arraylist/compare/v2.3.3...v2.4.0) (2022-11-24)
 
 
