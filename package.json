@@ -141,7 +141,7 @@
   "devDependencies": {
     "aegir": "^37.4.6",
     "benchmark": "^2.1.4",
-    "bl": "^5.0.0",
+    "bl": "^6.0.0",
     "it-all": "^2.0.0"
   }
 }
