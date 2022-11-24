@@ -164,10 +164,10 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
 
     // if consuming all bytes, skip iterating
-    if(bytes === this.byteLength) {
+    if (bytes === this.byteLength) {
       this.bufs = []
       this.length = 0
-      return;
+      return
   }
 
     while (this.bufs.length > 0) {
