@@ -168,7 +168,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       this.bufs = []
       this.length = 0
       return
-  }
+    }
 
     while (this.bufs.length > 0) {
       if (bytes >= this.bufs[0].byteLength) {
