@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/achingbrain/uint8arraylist/compare/v2.4.1...v2.4.2) (2022-11-24)
+
+
+### Bug Fixes
+
+* optimize consume method ([#42](https://github.com/achingbrain/uint8arraylist/issues/42)) ([071ae6c](https://github.com/achingbrain/uint8arraylist/commit/071ae6cc0679915ca3b58eb097da180370e66a0e))
+
 ## [2.4.1](https://github.com/achingbrain/uint8arraylist/compare/v2.4.0...v2.4.1) (2022-11-24)
 
 
