@@ -1,3 +1,15 @@
+## [2.4.0](https://github.com/achingbrain/uint8arraylist/compare/v2.3.3...v2.4.0) (2022-11-24)
+
+
+### Features
+
+* add .indexOf method to search for sub-arrays ([f3ebef1](https://github.com/achingbrain/uint8arraylist/commit/f3ebef195ae45667e0a7e03cda5d96cdc767e5f9))
+
+
+### Dependencies
+
+* **dev:** bump it-all from 1.0.6 to 2.0.0 ([#45](https://github.com/achingbrain/uint8arraylist/issues/45)) ([dee7c47](https://github.com/achingbrain/uint8arraylist/commit/dee7c4785013b1c180c4b9e8ff703f0d00d811cd))
+
 ## [2.3.3](https://github.com/achingbrain/uint8arraylist/compare/v2.3.2...v2.3.3) (2022-10-12)
 
 
