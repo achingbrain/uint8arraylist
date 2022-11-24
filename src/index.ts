@@ -309,6 +309,79 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return { bufs, length: endExclusive - beginInclusive }
   }
 
+  indexOf (search: Uint8ArrayList | Uint8Array, offset: number = 0): number {
+    if (!isUint8ArrayList(search) && !(search instanceof Uint8Array)) {
+      throw new TypeError('The "value" argument must be a Uint8ArrayList or Uint8Array')
+    }
+
+    const needle = search instanceof Uint8Array ? search : search.subarray()
+
+    offset = Number(offset ?? 0)
+
+    if (isNaN(offset)) {
+      offset = 0
+    }
+
+    if (offset < 0) {
+      offset = this.length + offset
+    }
+
+    if (offset < 0) {
+      offset = 0
+    }
+
+    if (search.length === 0) {
+      return offset > this.length ? this.length : offset
+    }
+
+    // https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm
+    const M: number = needle.byteLength
+
+    if (M === 0) {
+      throw new TypeError('search must be at least 1 byte long')
+    }
+
+    // radix
+    const radix: number = 256
+    const rightmostPositions: Int32Array = new Int32Array(radix)
+
+    // position of the rightmost occurrence of the byte c in the pattern
+    for (let c: number = 0; c < radix; c++) {
+      // -1 for bytes not in pattern
+      rightmostPositions[c] = -1
+    }
+
+    for (let j = 0; j < M; j++) {
+      // rightmost position for bytes in pattern
+      rightmostPositions[needle[j]] = j
+    }
+
+    // Return offset of first match, -1 if no match
+    const right = rightmostPositions
+    const lastIndex = this.byteLength - needle.byteLength
+    const lastPatIndex = needle.byteLength - 1
+    let skip: number
+
+    for (let i = offset; i <= lastIndex; i += skip) {
+      skip = 0
+
+      for (let j = lastPatIndex; j >= 0; j--) {
+        const char: number = this.get(i + j)
+
+        if (needle[j] !== char) {
+          skip = Math.max(1, j - right[char])
+          break
+        }
+      }
+
+      if (skip === 0) {
+        return i
+      }
+    }
+
+    return -1
+  }
+
   getInt8 (byteOffset: number): number {
     const buf = this.subarray(byteOffset, byteOffset + 1)
     const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength)
@@ -498,3 +571,25 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return list
   }
 }
+
+/*
+function indexOf (needle: Uint8Array, haystack: Uint8Array, offset = 0) {
+  for (let i = offset; i < haystack.byteLength; i++) {
+    for (let j = 0; j < needle.length; j++) {
+      if (haystack[i + j] !== needle[j]) {
+        break
+      }
+
+      if (j === needle.byteLength -1) {
+        return i
+      }
+    }
+
+    if (haystack.byteLength - i < needle.byteLength) {
+      break
+    }
+  }
+
+  return -1
+}
+*/
