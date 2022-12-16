@@ -4,7 +4,7 @@ import { allocUnsafe, alloc } from 'uint8arrays/alloc'
 
 const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
-type Appendable = Uint8ArrayList | Uint8Array
+export type Appendable = Uint8ArrayList | Uint8Array
 
 function findBufAndOffset (bufs: Uint8Array[], index: number) {
   if (index == null || index < 0) {
@@ -31,6 +31,16 @@ function findBufAndOffset (bufs: Uint8Array[], index: number) {
 
 /**
  * Check if object is a CID instance
+ *
+ * @example
+ *
+ * ```js
+ * import { isUint8ArrayList, Uint8ArrayList } from 'uint8arraylist'
+ *
+ * isUint8ArrayList(true) // false
+ * isUint8ArrayList([]) // false
+ * isUint8ArrayList(new Uint8ArrayList()) // true
+ * ```
  */
 export function isUint8ArrayList (value: any): value is Uint8ArrayList {
   return Boolean(value?.[symbol])

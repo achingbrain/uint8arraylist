@@ -1,26 +1,36 @@
 # uint8arraylist <!-- omit in toc -->
 
 [![codecov](https://img.shields.io/codecov/c/github/achingbrain/uint8arraylist.svg?style=flat-square)](https://codecov.io/gh/achingbrain/uint8arraylist)
-[![CI](https://img.shields.io/github/workflow/status/achingbrain/uint8arraylist/test%20&%20maybe%20release/master?style=flat-square)](https://github.com/achingbrain/uint8arraylist/actions/workflows/js-test-and-release.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/achingbrain/uint8arraylist/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/achingbrain/uint8arraylist/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
 
 > Append and consume bytes using only no-copy operations
 
 ## Table of contents <!-- omit in toc -->
 
 - [Install](#install)
+  - [Browser `<script>` tag](#browser-script-tag)
 - [Usage](#usage)
   - [Converting Uint8ArrayLists to Uint8Arrays](#converting-uint8arraylists-to-uint8arrays)
     - [slice](#slice)
     - [subarray](#subarray)
     - [sublist](#sublist)
 - [Inspiration](#inspiration)
+- [API Docs](#api-docs)
 - [License](#license)
-- [Contribute](#contribute)
+- [Contribution](#contribution)
 
 ## Install
 
 ```console
 $ npm i uint8arraylist
+```
+
+### Browser `<script>` tag
+
+Loading this module through a script tag will make it's exports available as `Uint8arraylist` in the global namespace.
+
+```html
+<script src="https://unpkg.com/uint8arraylist/dist/index.min.js"></script>
 ```
 
 ## Usage
@@ -101,6 +111,10 @@ list.sublist(2, 5)
 
 Borrows liberally from [bl](https://www.npmjs.com/package/bl) but only uses native JS types.
 
+## API Docs
+
+- <https://achingbrain.github.io/uint8arraylist>
+
 ## License
 
 Licensed under either of
@@ -108,6 +122,6 @@ Licensed under either of
 - Apache 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
 - MIT ([LICENSE-MIT](LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
 
-## Contribute
+## Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

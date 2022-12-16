@@ -1,5 +1,8 @@
 node_modules
+build
 dist
-package-lock.json
-.nyc_output
+.docs
 .coverage
+node_modules
+package-lock.json
+yarn.lock
