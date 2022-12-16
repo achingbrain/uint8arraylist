@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/achingbrain/uint8arraylist/compare/v2.4.2...v2.4.3) (2022-12-16)
+
+
+### Documentation
+
+* publish api docs ([#48](https://github.com/achingbrain/uint8arraylist/issues/48)) ([cb6c3e1](https://github.com/achingbrain/uint8arraylist/commit/cb6c3e16e583cf036fad43755595808f0e5f37c1))
+
 ## [2.4.2](https://github.com/achingbrain/uint8arraylist/compare/v2.4.1...v2.4.2) (2022-11-24)
 
 
