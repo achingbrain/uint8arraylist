@@ -52,7 +52,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
 
   constructor (...data: Appendable[]) {
     // Define symbol
-    Object.defineProperty(this, symbol, { value: true })
+    (this as any)[symbol] = true
 
     this.bufs = []
     this.length = 0
