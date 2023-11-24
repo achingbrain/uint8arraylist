@@ -12,10 +12,6 @@
   "bugs": {
     "url": "https://github.com/achingbrain/uint8arraylist/issues"
   },
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
-  },
   "type": "module",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -33,6 +29,7 @@
   "eslintConfig": {
     "extends": "ipfs",
     "parserOptions": {
+      "project": true,
       "sourceType": "module"
     }
   },
@@ -140,9 +137,9 @@
     "uint8arrays": "^4.0.2"
   },
   "devDependencies": {
-    "aegir": "^37.4.6",
+    "aegir": "^41.1.9",
     "benchmark": "^2.1.4",
     "bl": "^6.0.0",
-    "it-all": "^2.0.0"
+    "it-all": "^3.0.4"
   }
 }
