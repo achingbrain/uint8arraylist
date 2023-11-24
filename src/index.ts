@@ -131,6 +131,7 @@ export function isUint8ArrayList (value: any): value is Uint8ArrayList {
 export class Uint8ArrayList implements Iterable<Uint8Array> {
   private bufs: Uint8Array[]
   public length: number
+  public readonly [symbol] = true
 
   constructor (...data: Appendable[]) {
     this.bufs = []
@@ -139,10 +140,6 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     if (data.length > 0) {
       this.appendAll(data)
     }
-  }
-
-  get [symbol] (): boolean {
-    return true
   }
 
   * [Symbol.iterator] (): Iterator<Uint8Array> {
