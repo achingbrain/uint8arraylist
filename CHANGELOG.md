@@ -1,3 +1,10 @@
+## [2.4.6](https://github.com/achingbrain/uint8arraylist/compare/v2.4.5...v2.4.6) (2023-11-24)
+
+
+### Dependencies
+
+* update aegir to latest version ([#63](https://github.com/achingbrain/uint8arraylist/issues/63)) ([651b696](https://github.com/achingbrain/uint8arraylist/commit/651b6963a926044787fdc2382cdbe5d20bb3e46d))
+
 ## [2.4.5](https://github.com/achingbrain/uint8arraylist/compare/v2.4.4...v2.4.5) (2023-11-24)
 
 ## [2.4.4](https://github.com/achingbrain/uint8arraylist/compare/v2.4.3...v2.4.4) (2023-11-24)
