@@ -1,3 +1,10 @@
+## [2.4.7](https://github.com/achingbrain/uint8arraylist/compare/v2.4.6...v2.4.7) (2023-11-24)
+
+
+### Bug Fixes
+
+* skip array initialisation in sublist method ([#65](https://github.com/achingbrain/uint8arraylist/issues/65)) ([23836ac](https://github.com/achingbrain/uint8arraylist/commit/23836aca2cb7084a97e43a24cade149709f4e679))
+
 ## [2.4.6](https://github.com/achingbrain/uint8arraylist/compare/v2.4.5...v2.4.6) (2023-11-24)
 
 
