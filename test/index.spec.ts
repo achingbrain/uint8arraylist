@@ -1,8 +1,8 @@
 import { expect } from 'aegir/chai'
-import { Uint8ArrayList, isUint8ArrayList } from '../src/index.js'
-import { toString } from 'uint8arrays/to-string'
-import { fromString } from 'uint8arrays/from-string'
 import all from 'it-all'
+import { fromString } from 'uint8arrays/from-string'
+import { toString } from 'uint8arrays/to-string'
+import { Uint8ArrayList, isUint8ArrayList } from '../src/index.js'
 
 describe('Uint8arrayList', () => {
   describe('constructor', () => {
@@ -136,9 +136,9 @@ describe('Uint8arrayList', () => {
       bl.set(3, 111)
       expect(bl.get(3)).to.equal(111)
 
-      expect(() => bl.set(-1, 5)).to.throw(RangeError)
-      expect(() => bl.set(4, 5)).to.throw(RangeError)
-      expect(() => bl.set(5, 5)).to.throw(RangeError)
+      expect(() => { bl.set(-1, 5) }).to.throw(RangeError)
+      expect(() => { bl.set(4, 5) }).to.throw(RangeError)
+      expect(() => { bl.set(5, 5) }).to.throw(RangeError)
     })
 
     it('sets bytes in multiple buffers', () => {
@@ -174,9 +174,9 @@ describe('Uint8arrayList', () => {
 
       bl.append(fromString('abcd'))
 
-      expect(() => bl.write(fromString('b'), -1)).to.throw(RangeError)
-      expect(() => bl.write(fromString('b'), 4)).to.throw(RangeError)
-      expect(() => bl.write(fromString('b'), 5)).to.throw(RangeError)
+      expect(() => { bl.write(fromString('b'), -1) }).to.throw(RangeError)
+      expect(() => { bl.write(fromString('b'), 4) }).to.throw(RangeError)
+      expect(() => { bl.write(fromString('b'), 5) }).to.throw(RangeError)
     })
 
     it('writes into a single buffer', () => {
@@ -208,13 +208,13 @@ describe('Uint8arrayList', () => {
       const bl = new Uint8ArrayList()
 
       // @ts-expect-error invalid params
-      expect(() => bl.write('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.write('hello') }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.write(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.write(5) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.write(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.write(null) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.write([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.write([5]) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
     })
   })
 
@@ -402,13 +402,13 @@ describe('Uint8arrayList', () => {
       const bl = new Uint8ArrayList()
 
       // @ts-expect-error invalid params
-      expect(() => bl.append('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.append('hello') }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.append(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.append(5) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.append(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.append(null) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.append([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.append([5]) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
     })
   })
 
@@ -485,13 +485,13 @@ describe('Uint8arrayList', () => {
       const bl = new Uint8ArrayList()
 
       // @ts-expect-error invalid params
-      expect(() => bl.prepend('hello')).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.prepend('hello') }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.prepend(5)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.prepend(5) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.prepend(null)).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.prepend(null) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
       // @ts-expect-error invalid params
-      expect(() => bl.prepend([5])).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
+      expect(() => { bl.prepend([5]) }).to.throw(/must be an Uint8Array or a Uint8ArrayList/)
     })
   })
 
@@ -589,7 +589,7 @@ describe('Uint8arrayList', () => {
       bl.append(input[0])
       bl.append(input[1])
 
-      const res = await all(bl)
+      const res = all(bl)
 
       expect(res).to.deep.equal(input)
       expect([...bl]).to.deep.equal(input)

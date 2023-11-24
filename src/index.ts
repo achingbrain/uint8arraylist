@@ -1,12 +1,94 @@
+/**
+ * @packageDocumentation
+ *
+ * A class that lets you do operations over a list of Uint8Arrays without
+ * copying them.
+ *
+ * ```js
+ * import { Uint8ArrayList } from 'uint8arraylist'
+ *
+ * const list = new Uint8ArrayList()
+ * list.append(Uint8Array.from([0, 1, 2]))
+ * list.append(Uint8Array.from([3, 4, 5]))
+ *
+ * list.subarray()
+ * // -> Uint8Array([0, 1, 2, 3, 4, 5])
+ *
+ * list.consume(3)
+ * list.subarray()
+ * // -> Uint8Array([3, 4, 5])
+ *
+ * // you can also iterate over the list
+ * for (const buf of list) {
+ *   // ..do something with `buf`
+ * }
+ *
+ * list.subarray(0, 1)
+ * // -> Uint8Array([0])
+ * ```
+ *
+ * ## Converting Uint8ArrayLists to Uint8Arrays
+ *
+ * There are two ways to turn a `Uint8ArrayList` into a `Uint8Array` - `.slice` and `.subarray` and one way to turn a `Uint8ArrayList` into a `Uint8ArrayList` with different contents - `.sublist`.
+ *
+ * ### slice
+ *
+ * Slice follows the same semantics as [Uint8Array.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/slice) in that it creates a new `Uint8Array` and copies bytes into it using an optional offset & length.
+ *
+ * ```js
+ * const list = new Uint8ArrayList()
+ * list.append(Uint8Array.from([0, 1, 2]))
+ * list.append(Uint8Array.from([3, 4, 5]))
+ *
+ * list.slice(0, 1)
+ * // -> Uint8Array([0])
+ * ```
+ *
+ * ### subarray
+ *
+ * Subarray attempts to follow the same semantics as [Uint8Array.subarray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/subarray) with one important different - this is a no-copy operation, unless the requested bytes span two internal buffers in which case it is a copy operation.
+ *
+ * ```js
+ * const list = new Uint8ArrayList()
+ * list.append(Uint8Array.from([0, 1, 2]))
+ * list.append(Uint8Array.from([3, 4, 5]))
+ *
+ * list.subarray(0, 1)
+ * // -> Uint8Array([0]) - no-copy
+ *
+ * list.subarray(2, 5)
+ * // -> Uint8Array([2, 3, 4]) - copy
+ * ```
+ *
+ * ### sublist
+ *
+ * Sublist creates and returns a new `Uint8ArrayList` that shares the underlying buffers with the original so is always a no-copy operation.
+ *
+ * ```js
+ * const list = new Uint8ArrayList()
+ * list.append(Uint8Array.from([0, 1, 2]))
+ * list.append(Uint8Array.from([3, 4, 5]))
+ *
+ * list.sublist(0, 1)
+ * // -> Uint8ArrayList([0]) - no-copy
+ *
+ * list.sublist(2, 5)
+ * // -> Uint8ArrayList([2], [3, 4]) - no-copy
+ * ```
+ *
+ * ## Inspiration
+ *
+ * Borrows liberally from [bl](https://www.npmjs.com/package/bl) but only uses native JS types.
+ */
+import { allocUnsafe, alloc } from 'uint8arrays/alloc'
 import { concat } from 'uint8arrays/concat'
 import { equals } from 'uint8arrays/equals'
-import { allocUnsafe, alloc } from 'uint8arrays/alloc'
 
 const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
 export type Appendable = Uint8ArrayList | Uint8Array
 
-function findBufAndOffset (bufs: Uint8Array[], index: number) {
+function findBufAndOffset (bufs: Uint8Array[], index: number): { buf: Uint8Array, index: number } {
   if (index == null || index < 0) {
     throw new RangeError('index is out of bounds')
   }
@@ -51,9 +133,6 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   public length: number
 
   constructor (...data: Appendable[]) {
-    // Define symbol
-    (this as any)[symbol] = true
-
     this.bufs = []
     this.length = 0
 
@@ -62,25 +141,29 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
   }
 
-  * [Symbol.iterator] () {
+  get [symbol] (): boolean {
+    return true
+  }
+
+  * [Symbol.iterator] (): Iterator<Uint8Array> {
     yield * this.bufs
   }
 
-  get byteLength () {
+  get byteLength (): number {
     return this.length
   }
 
   /**
    * Add one or more `bufs` to the end of this Uint8ArrayList
    */
-  append (...bufs: Appendable[]) {
+  append (...bufs: Appendable[]): void {
     this.appendAll(bufs)
   }
 
   /**
    * Add all `bufs` to the end of this Uint8ArrayList
    */
-  appendAll (bufs: Appendable[]) {
+  appendAll (bufs: Appendable[]): void {
     let length = 0
 
     for (const buf of bufs) {
@@ -101,14 +184,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Add one or more `bufs` to the start of this Uint8ArrayList
    */
-  prepend (...bufs: Appendable[]) {
+  prepend (...bufs: Appendable[]): void {
     this.prependAll(bufs)
   }
 
   /**
    * Add all `bufs` to the start of this Uint8ArrayList
    */
-  prependAll (bufs: Appendable[]) {
+  prependAll (bufs: Appendable[]): void {
     let length = 0
 
     for (const buf of bufs.reverse()) {
@@ -129,7 +212,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Read the value at `index`
    */
-  get (index: number) {
+  get (index: number): number {
     const res = findBufAndOffset(this.bufs, index)
 
     return res.buf[res.index]
@@ -138,7 +221,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Set the value at `index` to `value`
    */
-  set (index: number, value: number) {
+  set (index: number, value: number): void {
     const res = findBufAndOffset(this.bufs, index)
 
     res.buf[res.index] = value
@@ -147,7 +230,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Copy bytes from `buf` to the index specified by `offset`
    */
-  write (buf: Appendable, offset: number = 0) {
+  write (buf: Appendable, offset: number = 0): void {
     if (buf instanceof Uint8Array) {
       for (let i = 0; i < buf.length; i++) {
         this.set(offset + i, buf[i])
@@ -164,7 +247,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Remove bytes from the front of the pool
    */
-  consume (bytes: number) {
+  consume (bytes: number): void {
     // first, normalize the argument, in accordance with how Buffer does it
     bytes = Math.trunc(bytes)
 
@@ -237,7 +320,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return list
   }
 
-  private _subList (beginInclusive?: number, endExclusive?: number) {
+  private _subList (beginInclusive?: number, endExclusive?: number): { bufs: Uint8Array[], length: number } {
     beginInclusive = beginInclusive ?? 0
     endExclusive = endExclusive ?? this.length
 
