@@ -1,6 +1,6 @@
 {
   "name": "uint8arraylist",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "Append and consume bytes using only no-copy operations",
   "author": "Alex Potsides <alex@achingbrain.net>",
   "license": "Apache-2.0 OR MIT",

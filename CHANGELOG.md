@@ -1,3 +1,10 @@
+## [2.4.4](https://github.com/achingbrain/uint8arraylist/compare/v2.4.3...v2.4.4) (2023-11-24)
+
+
+### Documentation
+
+* correct subarray example ([#62](https://github.com/achingbrain/uint8arraylist/issues/62)) ([b04961c](https://github.com/achingbrain/uint8arraylist/commit/b04961cbeb84c35567de8c4165a9138ee6796c1f))
+
 ## [2.4.3](https://github.com/achingbrain/uint8arraylist/compare/v2.4.2...v2.4.3) (2022-12-16)
 
 
