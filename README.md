@@ -1,5 +1,5 @@
 [![codecov](https://img.shields.io/codecov/c/github/achingbrain/uint8arraylist.svg?style=flat-square)](https://codecov.io/gh/achingbrain/uint8arraylist)
-[![CI](https://img.shields.io/github/actions/workflow/status/achingbrain/uint8arraylist/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/achingbrain/uint8arraylist/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
+[![CI](https://img.shields.io/github/actions/workflow/status/achingbrain/uint8arraylist/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/achingbrain/uint8arraylist/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
 > Append and consume bytes using only no-copy operations
 
