@@ -1,3 +1,5 @@
+## [2.4.5](https://github.com/achingbrain/uint8arraylist/compare/v2.4.4...v2.4.5) (2023-11-24)
+
 ## [2.4.4](https://github.com/achingbrain/uint8arraylist/compare/v2.4.3...v2.4.4) (2023-11-24)
 
 
