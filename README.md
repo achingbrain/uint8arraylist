@@ -88,7 +88,7 @@ list.slice(0, 1)
 // -> Uint8Array([0]) - no-copy
 
 list.slice(2, 5)
-// -> Uint8Array([2, 3]) - copy
+// -> Uint8Array([2, 3, 4]) - copy
 ```
 
 #### sublist
