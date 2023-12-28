@@ -134,7 +134,7 @@
     "docs": "aegir docs"
   },
   "dependencies": {
-    "uint8arrays": "^4.0.2"
+    "uint8arrays": "^5.0.1"
   },
   "devDependencies": {
     "aegir": "^41.1.9",
