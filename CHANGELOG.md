@@ -1,3 +1,15 @@
+## [2.4.8](https://github.com/achingbrain/uint8arraylist/compare/v2.4.7...v2.4.8) (2023-12-30)
+
+
+### Trivial Changes
+
+* rename master to main ([92ff136](https://github.com/achingbrain/uint8arraylist/commit/92ff136bee035c7257df4df838cf19ae26537572))
+
+
+### Dependencies
+
+* bump uint8arrays from 4.0.10 to 5.0.1 ([#67](https://github.com/achingbrain/uint8arraylist/issues/67)) ([a18ad9a](https://github.com/achingbrain/uint8arraylist/commit/a18ad9ab05b3b1a479515ba3c4949a062f1ae974))
+
 ## [2.4.7](https://github.com/achingbrain/uint8arraylist/compare/v2.4.6...v2.4.7) (2023-11-24)
 
 
