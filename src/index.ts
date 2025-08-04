@@ -169,7 +169,9 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
         this.bufs.push(buf)
       } else if (isUint8ArrayList(buf)) {
         length += buf.byteLength
-        this.bufs.push(...buf.bufs)
+        for (const chunk of buf.bufs) {
+          this.bufs.push(chunk)
+        }
       } else {
         throw new Error('Could not append value, must be an Uint8Array or a Uint8ArrayList')
       }
