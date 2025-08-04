@@ -1,3 +1,5 @@
+# uint8arraylist
+
 [![codecov](https://img.shields.io/codecov/c/github/achingbrain/uint8arraylist.svg?style=flat-square)](https://codecov.io/gh/achingbrain/uint8arraylist)
 [![CI](https://img.shields.io/github/actions/workflow/status/achingbrain/uint8arraylist/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/achingbrain/uint8arraylist/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
@@ -95,7 +97,7 @@ $ npm i uint8arraylist
 
 ## Browser `<script>` tag
 
-Loading this module through a script tag will make it's exports available as `Uint8arraylist` in the global namespace.
+Loading this module through a script tag will make its exports available as `Uint8arraylist` in the global namespace.
 
 ```html
 <script src="https://unpkg.com/uint8arraylist/dist/index.min.js"></script>
@@ -109,8 +111,8 @@ Loading this module through a script tag will make it's exports available as `Ui
 
 Licensed under either of
 
-- Apache 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
-- MIT ([LICENSE-MIT](LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+- Apache 2.0, ([LICENSE-APACHE](https://github.com/achingbrain/uint8arraylist/LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](https://github.com/achingbrain/uint8arraylist/LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
 
 # Contribution
 
