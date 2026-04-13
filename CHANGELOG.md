@@ -1,3 +1,19 @@
+## [2.4.9](https://github.com/achingbrain/uint8arraylist/compare/v2.4.8...v2.4.9) (2026-04-13)
+
+### Bug Fixes
+
+* loop over passed list ([#80](https://github.com/achingbrain/uint8arraylist/issues/80)) ([5849f5b](https://github.com/achingbrain/uint8arraylist/commit/5849f5ba5d7a9f349641d450486dd2ec757d11e0))
+* support require ([#82](https://github.com/achingbrain/uint8arraylist/issues/82)) ([01c924d](https://github.com/achingbrain/uint8arraylist/commit/01c924d08c1d9599bbdceb8a0a88ded21f521799))
+
+### Trivial Changes
+
+* create FUNDING.json ([4e04343](https://github.com/achingbrain/uint8arraylist/commit/4e04343e1a6b42fcb22e3bfc649d739685319b54))
+* fix action ([8f12acd](https://github.com/achingbrain/uint8arraylist/commit/8f12acd98deff97496b492a5ef304711cb9dcb49))
+
+### Dependencies
+
+* **dev:** bump aegir from 41.3.5 to 42.2.5 ([#77](https://github.com/achingbrain/uint8arraylist/issues/77)) ([cd9cbec](https://github.com/achingbrain/uint8arraylist/commit/cd9cbecf704ccbd0a7f31f74824a6b764329fdec))
+
 ## [2.4.8](https://github.com/achingbrain/uint8arraylist/compare/v2.4.7...v2.4.8) (2023-12-30)
 
 
