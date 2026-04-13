@@ -2,7 +2,7 @@ import { expect } from 'aegir/chai'
 import all from 'it-all'
 import { fromString } from 'uint8arrays/from-string'
 import { toString } from 'uint8arrays/to-string'
-import { Uint8ArrayList, isUint8ArrayList } from '../src/index.js'
+import { Uint8ArrayList, isUint8ArrayList } from '../src/index.ts'
 
 describe('Uint8arrayList', () => {
   describe('constructor', () => {

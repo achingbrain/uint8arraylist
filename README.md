@@ -7,6 +7,21 @@
 
 # About
 
+<!--
+
+!IMPORTANT!
+
+Everything in this README between "# About" and "# Install" is automatically
+generated and will be overwritten the next time the doc generator is run.
+
+To make changes to this section, please update the @packageDocumentation section
+of src/index.js or src/index.ts
+
+To experiment with formatting, please run "npm run docs" from the root of this
+repo and examine the changes made.
+
+-->
+
 A class that lets you do operations over a list of Uint8Arrays without
 copying them.
 
@@ -47,10 +62,7 @@ list.append(Uint8Array.from([0, 1, 2]))
 list.append(Uint8Array.from([3, 4, 5]))
 
 list.slice(0, 1)
-// -> Uint8Array([0]) - copy
-
-list.slice(2, 5)
-// -> Uint8Array([2, 3, 4]) - copy
+// -> Uint8Array([0])
 ```
 
 ### subarray
@@ -62,10 +74,10 @@ const list = new Uint8ArrayList()
 list.append(Uint8Array.from([0, 1, 2]))
 list.append(Uint8Array.from([3, 4, 5]))
 
-list.slice(0, 1)
+list.subarray(0, 1)
 // -> Uint8Array([0]) - no-copy
 
-list.slice(2, 5)
+list.subarray(2, 5)
 // -> Uint8Array([2, 3, 4]) - copy
 ```
 
