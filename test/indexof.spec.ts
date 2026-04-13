@@ -1,6 +1,6 @@
 import { expect } from 'aegir/chai'
 import { fromString } from 'uint8arrays/from-string'
-import { Uint8ArrayList } from '../src/index.js'
+import { Uint8ArrayList } from '../src/index.ts'
 
 describe('indexOf', () => {
   it('should find index of single byte needle', () => {

@@ -304,7 +304,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   }
 
   /**
-   * Returns a allocList from the given start and end element index.
+   * Returns a new Uint8ArrayList from the given start and end element index.
    *
    * This is a no-copy operation.
    */
@@ -314,7 +314,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     const list = new Uint8ArrayList()
     list.length = length
     // don't loop, just set the bufs
-    list.bufs = [...bufs]
+    list.bufs = bufs
 
     return list
   }
@@ -340,7 +340,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
 
     if (beginInclusive === 0 && endExclusive === this.length) {
-      return { bufs: this.bufs, length: this.length }
+      return { bufs: [...this.bufs], length: this.length }
     }
 
     const bufs: Uint8Array[] = []
