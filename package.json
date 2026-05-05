@@ -143,7 +143,7 @@
     "uint8arrays": "^5.0.1"
   },
   "devDependencies": {
-    "aegir": "^47.0.20",
+    "aegir": "^48.0.1",
     "benchmark": "^2.1.4",
     "bl": "^7.0.2",
     "it-all": "^3.0.4"
