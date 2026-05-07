@@ -128,7 +128,7 @@ export function isUint8ArrayList (value: any): value is Uint8ArrayList {
   return Boolean(value?.[symbol])
 }
 
-export class Uint8ArrayList <T extends ArrayBufferLike = ArrayBuffer> implements Iterable<Uint8Array<T>> {
+export class Uint8ArrayList <T extends ArrayBufferLike = ArrayBufferLike> implements Iterable<Uint8Array<T>> {
   private bufs: Uint8Array<T>[]
   public length: number
   public readonly [symbol] = true
