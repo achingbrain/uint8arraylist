@@ -86,7 +86,7 @@ import { equals } from 'uint8arrays/equals'
 
 const symbol = Symbol.for('@achingbrain/uint8arraylist')
 
-export type Appendable = Uint8ArrayList | Uint8Array
+export type Appendable<T extends ArrayBufferLike = ArrayBuffer> = Uint8ArrayList<T> | Uint8Array<T>
 
 function findBufAndOffset (bufs: Uint8Array[], index: number): { buf: Uint8Array, index: number } {
   if (index == null || index < 0) {
@@ -128,12 +128,12 @@ export function isUint8ArrayList (value: any): value is Uint8ArrayList {
   return Boolean(value?.[symbol])
 }
 
-export class Uint8ArrayList implements Iterable<Uint8Array> {
-  private bufs: Uint8Array[]
+export class Uint8ArrayList <T extends ArrayBufferLike = ArrayBuffer> implements Iterable<Uint8Array<T>> {
+  private bufs: Uint8Array<T>[]
   public length: number
   public readonly [symbol] = true
 
-  constructor (...data: Appendable[]) {
+  constructor (...data: Appendable<T>[]) {
     this.bufs = []
     this.length = 0
 
@@ -142,7 +142,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     }
   }
 
-  * [Symbol.iterator] (): Iterator<Uint8Array> {
+  * [Symbol.iterator] (): Iterator<Uint8Array<T>> {
     yield * this.bufs
   }
 
@@ -153,14 +153,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Add one or more `bufs` to the end of this Uint8ArrayList
    */
-  append (...bufs: Appendable[]): void {
+  append (...bufs: Appendable<T>[]): void {
     this.appendAll(bufs)
   }
 
   /**
    * Add all `bufs` to the end of this Uint8ArrayList
    */
-  appendAll (bufs: Appendable[]): void {
+  appendAll (bufs: Appendable<T>[]): void {
     let length = 0
 
     for (const buf of bufs) {
@@ -183,14 +183,14 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Add one or more `bufs` to the start of this Uint8ArrayList
    */
-  prepend (...bufs: Appendable[]): void {
+  prepend (...bufs: Appendable<T>[]): void {
     this.prependAll(bufs)
   }
 
   /**
    * Add all `bufs` to the start of this Uint8ArrayList
    */
-  prependAll (bufs: Appendable[]): void {
+  prependAll (bufs: Appendable<T>[]): void {
     let length = 0
 
     for (const buf of bufs.reverse()) {
@@ -229,7 +229,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
   /**
    * Copy bytes from `buf` to the index specified by `offset`
    */
-  write (buf: Appendable, offset: number = 0): void {
+  write (buf: Appendable<T | ArrayBuffer>, offset: number = 0): void {
     if (buf instanceof Uint8Array) {
       for (let i = 0; i < buf.length; i++) {
         this.set(offset + i, buf[i])
@@ -281,7 +281,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    * This is a copy operation as it is with Uint8Arrays and Arrays
    * - note this is different to the behaviour of Node Buffers.
    */
-  slice (beginInclusive?: number, endExclusive?: number): Uint8Array {
+  slice (beginInclusive?: number, endExclusive?: number): Uint8Array<ArrayBuffer> {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
     return concat(bufs, length)
@@ -293,7 +293,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    * In the best case where the data extracted comes from a single Uint8Array
    * internally this is a no-copy operation otherwise it is a copy operation.
    */
-  subarray (beginInclusive?: number, endExclusive?: number): Uint8Array {
+  subarray (beginInclusive?: number, endExclusive?: number): Uint8Array<T | ArrayBuffer> {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
     if (bufs.length === 1) {
@@ -308,10 +308,10 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    *
    * This is a no-copy operation.
    */
-  sublist (beginInclusive?: number, endExclusive?: number): Uint8ArrayList {
+  sublist (beginInclusive?: number, endExclusive?: number): Uint8ArrayList<T> {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
 
-    const list = new Uint8ArrayList()
+    const list = new Uint8ArrayList<T>()
     list.length = length
     // don't loop, just set the bufs
     list.bufs = bufs
@@ -319,7 +319,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
     return list
   }
 
-  private _subList (beginInclusive?: number, endExclusive?: number): { bufs: Uint8Array[], length: number } {
+  private _subList (beginInclusive?: number, endExclusive?: number): { bufs: Uint8Array<T>[], length: number } {
     beginInclusive = beginInclusive ?? 0
     endExclusive = endExclusive ?? this.length
 
@@ -343,7 +343,7 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
       return { bufs: [...this.bufs], length: this.length }
     }
 
-    const bufs: Uint8Array[] = []
+    const bufs: Uint8Array<T>[] = []
     let offset = 0
 
     for (let i = 0; i < this.bufs.length; i++) {
@@ -657,8 +657,8 @@ export class Uint8ArrayList implements Iterable<Uint8Array> {
    * Create a Uint8ArrayList from a pre-existing list of Uint8Arrays.  Use this
    * method if you know the total size of all the Uint8Arrays ahead of time.
    */
-  static fromUint8Arrays (bufs: Uint8Array[], length?: number): Uint8ArrayList {
-    const list = new Uint8ArrayList()
+  static fromUint8Arrays <T extends ArrayBufferLike> (bufs: Uint8Array<T>[], length?: number): Uint8ArrayList<T> {
+    const list = new Uint8ArrayList<T>()
     list.bufs = bufs
 
     if (length == null) {
