@@ -1,3 +1,18 @@
+## [3.0.0](https://github.com/achingbrain/uint8arraylist/compare/v2.4.9...v3.0.0) (2026-05-07)
+
+### ⚠ BREAKING CHANGES
+
+* `Uint8ArrayList` is now generic
+
+### Bug Fixes
+
+* make lists generic ([#87](https://github.com/achingbrain/uint8arraylist/issues/87)) ([3e433c5](https://github.com/achingbrain/uint8arraylist/commit/3e433c5a984c730bf73854b12cef7a8d9f034ed0))
+
+### Trivial Changes
+
+* bump aegir from 47.2.0 to 48.0.1 ([#86](https://github.com/achingbrain/uint8arraylist/issues/86)) ([ef56a3f](https://github.com/achingbrain/uint8arraylist/commit/ef56a3f8cfa04d1c3d0b16fdc24141fd91374439))
+* bump bl from 6.1.6 to 7.0.2 ([#85](https://github.com/achingbrain/uint8arraylist/issues/85)) ([1b19252](https://github.com/achingbrain/uint8arraylist/commit/1b1925242821fbe92dbeecb324da898232cc604e))
+
 ## [2.4.9](https://github.com/achingbrain/uint8arraylist/compare/v2.4.8...v2.4.9) (2026-04-13)
 
 ### Bug Fixes
