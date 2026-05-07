@@ -1,3 +1,9 @@
+## [3.0.1](https://github.com/achingbrain/uint8arraylist/compare/v3.0.0...v3.0.1) (2026-05-07)
+
+### Bug Fixes
+
+* align default with Uint8Array ([f3cd453](https://github.com/achingbrain/uint8arraylist/commit/f3cd4535edd057986d3dd034cdcd949c4d8c7ac9))
+
 ## [3.0.0](https://github.com/achingbrain/uint8arraylist/compare/v2.4.9...v3.0.0) (2026-05-07)
 
 ### ⚠ BREAKING CHANGES
