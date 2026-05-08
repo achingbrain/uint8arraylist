@@ -1,3 +1,9 @@
+## [3.0.2](https://github.com/achingbrain/uint8arraylist/compare/v3.0.1...v3.0.2) (2026-05-08)
+
+### Bug Fixes
+
+* small typo in subarray method comment ([#88](https://github.com/achingbrain/uint8arraylist/issues/88)) ([2db320c](https://github.com/achingbrain/uint8arraylist/commit/2db320c9d64fb5d77d36f071e0e8e65c4714d74e))
+
 ## [3.0.1](https://github.com/achingbrain/uint8arraylist/compare/v3.0.0...v3.0.1) (2026-05-07)
 
 ### Bug Fixes
