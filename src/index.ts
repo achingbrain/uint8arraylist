@@ -288,10 +288,10 @@ export class Uint8ArrayList <T extends ArrayBufferLike = ArrayBufferLike> implem
   }
 
   /**
-   * Returns a alloc from the given start and end element index.
+   * Returns a section of the array from the given start and end element index.
    *
-   * In the best case where the data extracted comes from a single Uint8Array
-   * internally this is a no-copy operation otherwise it is a copy operation.
+   * This is a no-copy operation where the data extracted data comes from a
+   * single Uint8Array internally, otherwise it is a copy operation.
    */
   subarray (beginInclusive?: number, endExclusive?: number): Uint8Array<T | ArrayBuffer> {
     const { bufs, length } = this._subList(beginInclusive, endExclusive)
